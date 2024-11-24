@@ -21,15 +21,15 @@ public class LlamaController {
     @PostMapping("/quiz")
     public <T extends Response> ResponseEntity<T> generateQuiz(
             @RequestBody String promptMessage) {
-        final T aiResponse = llamaAiService.generateQuiz(promptMessage);
-        return ResponseEntity.status(aiResponse.getCode()).body(aiResponse);
+        final T response = llamaAiService.generateQuiz(promptMessage);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 
     @PostMapping("/flashcard")
     public <T extends Response> ResponseEntity<T> generateFlashcard(
             @RequestBody String promptMessage){
-        final T llamaResponse = llamaAiService.generateFlashcards(promptMessage);
-        return ResponseEntity.status(llamaResponse.getCode()).body(llamaResponse);
+        final T response = llamaAiService.generateFlashcards(promptMessage);
+        return ResponseEntity.status(response.getCode()).body(response);
     }
 
     @PostMapping("/fill-in-the-blanks")
