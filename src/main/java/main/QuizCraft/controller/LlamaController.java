@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController()
-@RequestMapping("api/v1/ai/generate")
+@RequestMapping("api/v1/ai/generation")
 @RequiredArgsConstructor
 public class LlamaController {
 
@@ -45,6 +45,22 @@ public class LlamaController {
         final T response = llamaAiService.generateSummary(promptMessage);
         return ResponseEntity.status(response.getCode()).body(response);
     }
+
+    @PostMapping("/translation")
+    public <T extends Response> ResponseEntity<T> generateTranslatedText(
+            @RequestBody String promptMessage,
+            @RequestBody String language){
+        final T response = llamaAiService.generateTranslateText(promptMessage, language);
+        return ResponseEntity.status(response.getCode()).body(response);
+    }
+
+    @PostMapping("/true-or-false-questions")
+    public <T extends Response> ResponseEntity<T> generateTrueFalseQuestions(
+            @RequestBody String promptMessage){
+        final T respone = llamaAiService.generateTrueFalseQuestions(promptMessage);
+        return ResponseEntity.status(respone.getCode()).body(respone);
+    }
+
 
 
 }

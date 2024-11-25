@@ -124,4 +124,57 @@ public class LlamaAiServiceImpl implements LlamaAiService {
         }
     }
 
+    @Override
+    public LlamaResponse generateTranslateText(String prompt, String targetLanguage) {
+        try {
+            String formattedPrompt = String.format(
+                    "Translate the following text into %s. Format the output as follows:\n" +
+                            "\n" +
+                            "    Translated Text:\n" +
+                            "    [Your translated text here]\n" +
+                            "\n" +
+                            "Here is the text to translate:\n%s",
+                    targetLanguage, prompt
+            );
+            final String llamaMessage = ollamaChatModel.call(formattedPrompt);
+            return new LlamaResponse().setMessage(llamaMessage);
+        } catch (Exception e) {
+            return new LlamaResponse(
+                    null,
+                    "http://QuizCraft/problems/lack-of-ai-connection",
+                    500,
+                    "Error translating text",
+                    "Error translating text: " + e.getMessage(),
+                    null
+            );
+        }
+    }
+
+    @Override
+    public LlamaResponse generateTrueFalseQuestions(String prompt) {
+        try {
+            String formattedPrompt = String.format(
+                    "Read the following text and create 5 True/False questions based on it. Format the output as follows:\n" +
+                            "\n" +
+                            "    True/False Question:\n" +
+                            "    [Your statement here] (True/False)\n" +
+                            "\n" +
+                            "Here is the text to process:\n%s",
+                    prompt
+            );
+            final String llamaMessage = ollamaChatModel.call(formattedPrompt);
+            return new LlamaResponse().setMessage(llamaMessage);
+        } catch (Exception e) {
+            return new LlamaResponse(
+                    null,
+                    "http://QuizCraft/problems/lack-of-ai-connection",
+                    500,
+                    "Error generating True/False questions",
+                    "Error generating True/False questions: " + e.getMessage(),
+                    null
+            );
+        }
+    }
+
+
 }
