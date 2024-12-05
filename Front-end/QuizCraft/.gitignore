@@ -17,6 +17,7 @@ yarn-error.log*
 *.log
 
 # IDE/Editor files
+.idea
 .vscode/
 *.suo
 *.ntvs*
