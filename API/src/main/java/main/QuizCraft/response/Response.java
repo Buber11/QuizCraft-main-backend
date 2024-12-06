@@ -9,10 +9,9 @@ import lombok.experimental.Accessors;
 @Data
 @Accessors(chain = true)
 public abstract class Response {
-    private static int DEFAULT_OK_CODE = 200;
 
     private String status;
-    private int code = DEFAULT_OK_CODE;
+    private Integer code;
     private String title;
     private String detail;
     private String instance;
@@ -35,4 +34,13 @@ public abstract class Response {
     public <T extends Response > T cast(Class<T> targetClass){
         return targetClass.cast(this);
     }
+
+    public Integer getCode(){
+        if(code != null){
+            return code;
+        }else {
+            return 200;
+        }
+    }
+
 }
