@@ -26,10 +26,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     "Here is the text for the quiz:\n" +
                     "%s", prompt);
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse().setMessage(llamaMessage);
+            return new LlamaResponse(llamaMessage);
         } catch (Exception e) {
             return new LlamaResponse(
-                    null,
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error generating quiz",
@@ -51,10 +50,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     "Here is the text for the flashcards:\n" +
                     "%s", prompt);
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse().setMessage(llamaMessage);
+            return new LlamaResponse(llamaMessage);
         } catch (Exception e) {
             return new LlamaResponse(
-                    null,
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error generating flashcards",
@@ -82,10 +80,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     prompt
             );
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse().setMessage(llamaMessage);
+            return new LlamaResponse(llamaMessage);
         } catch (Exception e) {
             return new LlamaResponse(
-                    null,
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error generating fill-in-the-blank exercise",
@@ -108,10 +105,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     prompt
             );
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse().setMessage(llamaMessage);
+            return new LlamaResponse(llamaMessage);
         } catch (Exception e) {
             return new LlamaResponse(
-                    null,
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error generating summary",
@@ -134,10 +130,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     targetLanguage, prompt
             );
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse().setMessage(llamaMessage);
+            return new LlamaResponse(llamaMessage);
         } catch (Exception e) {
             return new LlamaResponse(
-                    null,
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error translating text",
@@ -160,10 +155,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     prompt
             );
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse().setMessage(llamaMessage);
+            return new LlamaResponse(llamaMessage);
         } catch (Exception e) {
             return new LlamaResponse(
-                    null,
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error generating True/False questions",

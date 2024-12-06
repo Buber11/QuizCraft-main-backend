@@ -1,23 +1,23 @@
 package main.QuizCraft.response;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 //RCF 7808
 @Data
 @Accessors(chain = true)
-public abstract class Response {
+public abstract class Response<T> {
 
     private String status;
     private Integer code;
     private String title;
     private String detail;
     private String instance;
+    private T view;
 
     public Response(String status,
-                    int code,
+                    Integer code,
                     String title,
                     String detail,
                     String instance) {
@@ -28,6 +28,10 @@ public abstract class Response {
         this.instance = instance;
     }
 
+    public Response(T view) {
+        this.view = view;
+    }
+
     public Response() {
     }
 
@@ -35,12 +39,7 @@ public abstract class Response {
         return targetClass.cast(this);
     }
 
-    public Integer getCode(){
-        if(code != null){
-            return code;
-        }else {
-            return 200;
-        }
-    }
+    public abstract Integer getCodeHttp();
+
 
 }
