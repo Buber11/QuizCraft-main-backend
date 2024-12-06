@@ -1,0 +1,93 @@
+// Variables for colors and spacing
+$primary-color: #3498db;         // Primary color for highlights
+$secondary-color: #2ecc71;       // Secondary color for buttons
+$card-bg-color: #f7f9fc;         // Background color for cards
+$text-color: #2c3e50;            // General text color
+$border-color: #dfe6e9;          // Border color for cards
+$hover-shadow-color: rgba(0, 0, 0, 0.15); // Shadow color for hover effect
+$padding: 1.5rem;                // General padding used throughout
+$border-radius: 8px;             // Border radius for cards and buttons
+$font-family: 'Arial', sans-serif; // Font family used across the dashboard
+
+.dashboard {
+  padding: $padding;
+  font-family: $font-family;
+  background-color: #ecf0f1;
+  min-height: 100vh;
+
+  // Header Section
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 3rem; // Increased spacing between header and content
+
+    h2 {
+      font-size: 2.5rem;
+      color: $primary-color;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: $text-color;
+      opacity: 0.8;
+    }
+  }
+
+  // Features Grid Section (Responsive grid for features)
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); // Auto-resizing grid for responsiveness
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  // Individual Feature Card
+  .feature-card {
+    background-color: $card-bg-color;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    padding: $padding;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    &:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 10px $hover-shadow-color;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      color: $primary-color;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: $text-color;
+      opacity: 0.8;
+    }
+  }
+
+  // Button for Flashcard Learning
+  .flashcard-learning-button {
+    text-align: center;
+    margin-bottom: 2rem; // Increased margin for better spacing
+
+    button {
+      background-color: $secondary-color;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: $border-radius;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: darken($secondary-color, 10%);
+      }
+    }
+  }
+}

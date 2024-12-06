@@ -1,6 +1,8 @@
+// Zmienne
 $primary-color: #3498db;
 $text-color: white;
 
+// Navbar główny
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -9,15 +11,16 @@ $text-color: white;
   padding: 1rem;
   color: $text-color;
   box-sizing: border-box;
-
+  transition: background-color 0.3s ease;
 
   @media (max-width: 768px) {
     flex-direction: column;
     align-items: center;
+    padding: 1rem; // Dodajemy padding w wersji mobilnej
   }
 }
 
-
+// Logo
 .logo {
   display: flex;
   flex-direction: column;
@@ -28,6 +31,11 @@ $text-color: white;
     margin: 0;
     font-size: 2rem;
     font-weight: 700;
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: translateY(-5px);
+    }
   }
 
   p {
@@ -37,14 +45,13 @@ $text-color: white;
   }
 }
 
-
+// Lista nawigacyjna
 .navbar ul {
   list-style: none;
   display: flex;
   justify-content: space-around;
   margin: 0;
   padding: 0;
-
 
   @media (max-width: 768px) {
     flex-direction: column;
@@ -53,33 +60,49 @@ $text-color: white;
   }
 }
 
-
+// Elementy listy
 .navbar li {
   margin: 0;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
 }
 
-
+// Linki nawigacyjne
 .navbar a {
   color: $text-color;
   text-decoration: none;
   padding: 0.5rem 1rem;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  border-radius: 5px;
 
   &:hover {
     background-color: darken($primary-color, 10%);
+    transform: translateX(10px);
   }
 }
 
-
+// Aktywne linki
 .navbar .active {
   font-weight: bold;
+  border-bottom: 2px solid $primary-color;  // Dodajemy linię pod aktywnym linkiem
+  padding-bottom: 0.4rem;
 }
 
-
+// Stylizacja dla wersji mobilnej
 @media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+  }
+
   .navbar a {
     padding: 1rem;
     width: 100%;
     text-align: center;
   }
 }
+

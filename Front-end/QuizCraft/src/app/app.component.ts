@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, Routes, RouterModule } from '@angular/router';
+import { RouterOutlet, RouterModule } from '@angular/router';
 import { HomePageComponent } from './home-page/home-page.component';
 import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { DashboardComponent} from './dashboard/dashboard.component';
+import { routes } from './app.routes';
 
-@Component({
+@Component
+({
   selector: 'app-root',
   standalone: true,
   imports: [
@@ -12,7 +15,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     HomePageComponent,
     LoginComponent,
     RouterModule,
-    NavbarComponent
+    NavbarComponent,
+    DashboardComponent
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
@@ -20,10 +24,5 @@ import { NavbarComponent } from './navbar/navbar.component';
 export class AppComponent {
   title = 'QuizCraft';
 }
-
-const routes: Routes = [
-  { path: '', component: HomePageComponent },
-  { path: 'login', component: LoginComponent },
-];
 
 RouterModule.forRoot(routes);
