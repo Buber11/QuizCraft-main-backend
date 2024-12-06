@@ -1,11 +1,8 @@
-package main.QuizCraft.service;
+package main.QuizCraft.service.Llama;
 
 import lombok.RequiredArgsConstructor;
 import main.QuizCraft.response.LlamaResponse;
-import main.QuizCraft.response.Response;
-import org.springframework.ai.autoconfigure.ollama.OllamaChatProperties;
 import org.springframework.ai.ollama.OllamaChatModel;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
