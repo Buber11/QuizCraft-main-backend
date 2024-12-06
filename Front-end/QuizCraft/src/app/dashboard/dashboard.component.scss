@@ -1,0 +1,86 @@
+// Variables for colors and spacing
+$primary-color: #3498db;
+$secondary-color: #2ecc71;
+$card-bg-color: #f7f9fc;
+$text-color: #2c3e50;
+$padding: 1.5rem;
+
+.dashboard {
+  padding: $padding;
+  font-family: 'Arial', sans-serif;
+  background-color: #ecf0f1;
+  min-height: 100vh;
+
+  // Header Section
+  .dashboard-header {
+    text-align: center;
+    margin-bottom: 2rem;
+
+    h2 {
+      font-size: 2.5rem;
+      color: $primary-color;
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: $text-color;
+      opacity: 0.8;
+    }
+  }
+
+  // Features Grid
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+
+    // Individual Feature Card
+    .feature-card {
+      background-color: $card-bg-color;
+      border: 1px solid #dfe6e9;
+      border-radius: 8px;
+      padding: $padding;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        color: $primary-color;
+        margin-bottom: 0.5rem;
+      }
+
+      p {
+        font-size: 1rem;
+        color: $text-color;
+        opacity: 0.8;
+      }
+    }
+  }
+  .flashcard-learning-button {
+    text-align: center;
+    margin-bottom: 1.5rem;
+
+    button {
+      background-color: #2ecc71;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #27ae60;
+      }
+    }
+  }
+}

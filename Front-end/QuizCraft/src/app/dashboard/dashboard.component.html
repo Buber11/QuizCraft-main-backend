@@ -1,0 +1,39 @@
+<app-navbar></app-navbar>
+
+<div class="dashboard">
+  <div class="dashboard-header">
+    <h2>Welcome to QuizCraft Dashboard</h2>
+    <p>Choose a feature to get started with AI-powered tools!</p>
+  </div>
+
+  <div class="flashcard-learning-button">
+    <button (click)="navigateTo('flashcard-learning')">Learn from Saved</button>
+  </div>
+
+  <div class="features-grid">
+    <div class="feature-card" (click)="navigateTo('quiz')">
+      <h3>Generate Quiz</h3>
+      <p>Create custom quizzes based on your study materials.</p>
+    </div>
+    <div class="feature-card" (click)="navigateTo('flashcards')">
+      <h3>Generate Flashcards</h3>
+      <p>Design flashcards to make memorization easy and fun.</p>
+    </div>
+    <div class="feature-card" (click)="navigateTo('fill-in-the-blanks')">
+      <h3>Fill in the Blanks</h3>
+      <p>Transform text into fill-in-the-blank exercises.</p>
+    </div>
+    <div class="feature-card" (click)="navigateTo('summarization')">
+      <h3>Summarization</h3>
+      <p>Get concise summaries of your study materials.</p>
+    </div>
+    <div class="feature-card" (click)="navigateTo('translation')">
+      <h3>Text Translation</h3>
+      <p>Translate content into multiple languages with ease.</p>
+    </div>
+    <div class="feature-card" (click)="navigateTo('true-false')">
+      <h3>True/False Questions</h3>
+      <p>Generate True/False questions for quick review sessions.</p>
+    </div>
+  </div>
+</div>
