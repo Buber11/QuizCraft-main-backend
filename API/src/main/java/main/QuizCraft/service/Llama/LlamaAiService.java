@@ -1,6 +1,5 @@
-package main.QuizCraft.service;
+package main.QuizCraft.service.Llama;
 
-import main.QuizCraft.response.LlamaResponse;
 import main.QuizCraft.response.Response;
 
 public interface LlamaAiService {

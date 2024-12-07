@@ -7,18 +7,18 @@ import lombok.experimental.Accessors;
 
 //RCF 7808
 @Data
-@Accessors(chain = true)
-public abstract class Response {
-    private static int DEFAULT_OK_CODE = 200;
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public abstract class Response<T> {
 
     private String status;
-    private int code = DEFAULT_OK_CODE;
+    private Integer code;
     private String title;
     private String detail;
     private String instance;
+    private T view;
 
     public Response(String status,
-                    int code,
+                    Integer code,
                     String title,
                     String detail,
                     String instance) {
@@ -29,10 +29,28 @@ public abstract class Response {
         this.instance = instance;
     }
 
+    public Response(T view) {
+        this.view = view;
+    }
+
     public Response() {
     }
 
     public <T extends Response > T cast(Class<T> targetClass){
         return targetClass.cast(this);
+    }
+
+    public abstract Integer getCodeHttp();
+
+    @Override
+    public String toString() {
+        return "Response{" +
+                "status='" + status + '\'' +
+                ", code=" + code +
+                ", title='" + title + '\'' +
+                ", detail='" + detail + '\'' +
+                ", instance='" + instance + '\'' +
+                ", view=" + (view != null ? view.toString() : "null") +
+                '}';
     }
 }

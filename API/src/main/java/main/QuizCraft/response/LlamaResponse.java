@@ -1,26 +1,25 @@
 package main.QuizCraft.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.experimental.Accessors;
+public class LlamaResponse extends Response<String>{
 
-@Data
-@Accessors(chain = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class LlamaResponse extends Response{
-    private String message;
-
-    public LlamaResponse(String message,
-                         String status,
-                         int code,
+    public LlamaResponse(String status,
+                         Integer code,
                          String title,
                          String detail,
                          String instance) {
         super(status, code, title, detail, instance);
-        this.message = message;
     }
-    public LlamaResponse(){};
+
+    public LlamaResponse(String view) {
+        super(view);
+    }
+
+    public LlamaResponse(){}
+
+    @Override
+    public Integer getCodeHttp() {
+        return super.getCode() != null ? super.getCode() : 200;
+    }
+
+
 }

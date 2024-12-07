@@ -1,10 +1,8 @@
 package main.QuizCraft.controller;
 
 import lombok.RequiredArgsConstructor;
-import main.QuizCraft.response.LlamaResponse;
 import main.QuizCraft.response.Response;
-import main.QuizCraft.service.LlamaAiService;
-import org.springframework.http.HttpStatus;
+import main.QuizCraft.service.Llama.LlamaAiService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
