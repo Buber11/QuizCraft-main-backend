@@ -5,7 +5,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import main.QuizCraft.model.User;
+import main.QuizCraft.model.user.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
@@ -32,7 +32,7 @@ public class JwtService {
     }
 
     public Long extractUserId(String token) {
-        return extractClaim(token, claims -> claims.get("id", Long.class));
+        return extractClaim(token, claims -> claims.get("user_id", Long.class));
     }
 
     public String extractToken(String authHeader) {
