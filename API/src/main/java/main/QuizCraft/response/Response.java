@@ -1,12 +1,13 @@
 package main.QuizCraft.response;
 
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 //RCF 7808
 @Data
-@Accessors(chain = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public abstract class Response<T> {
 
     private String status;
@@ -41,5 +42,15 @@ public abstract class Response<T> {
 
     public abstract Integer getCodeHttp();
 
-
+    @Override
+    public String toString() {
+        return "Response{" +
+                "status='" + status + '\'' +
+                ", code=" + code +
+                ", title='" + title + '\'' +
+                ", detail='" + detail + '\'' +
+                ", instance='" + instance + '\'' +
+                ", view=" + (view != null ? view.toString() : "null") +
+                '}';
+    }
 }
