@@ -5,6 +5,8 @@ import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { DashboardComponent} from './dashboard/dashboard.component';
 import { routes } from './app.routes';
+import {AuthService} from './auth/auth-service.service';
+import {HttpClientModule} from '@angular/common/http';
 
 @Component
 ({
@@ -16,8 +18,10 @@ import { routes } from './app.routes';
     LoginComponent,
     RouterModule,
     NavbarComponent,
-    DashboardComponent
+    DashboardComponent,
+    HttpClientModule
   ],
+  providers: [AuthService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })

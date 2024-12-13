@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { NavbarComponent } from '../navbar/navbar.component';
+import {AuthService} from '../auth/auth-service.service';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,30 @@ import { NavbarComponent } from '../navbar/navbar.component';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  email: string = '';
+  username: string = '';
   password: string = '';
   errorMessage: string = '';
 
+  constructor(private authService: AuthService, private router: Router) {}
+
   onLogin() {
-    if (!this.email || !this.password) {
+    if (!this.username || !this.password) {
       this.errorMessage = 'Both fields are required';
+      return;
     }
+
+    this.authService.login({ username: this.username, password: this.password }).subscribe(
+      success => {
+        if (success) {
+          this.router.navigate(['/dashboard']);
+        } else {
+          this.errorMessage = 'Invalid credentials';
+        }
+      },
+      error => {
+        this.errorMessage = 'An error occurred during login';
+      }
+    );
   }
 }
 
