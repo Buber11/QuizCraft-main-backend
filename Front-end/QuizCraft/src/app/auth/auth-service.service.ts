@@ -32,7 +32,7 @@ export class AuthService {
 
   isLoggedIn(): Observable<boolean> {
     if (this.loggedIn) {
-      return this.http.get<{ loggedIn: boolean }>(`${this.apiUrl}/check-token`, { withCredentials: true }).pipe(
+      return this.http.get<{ loggedIn: boolean }>(`${this.apiUrl}/token-validation`, { withCredentials: true }).pipe(
         map(response => response.loggedIn),
         catchError(() => {
           this.loggedIn = false;
