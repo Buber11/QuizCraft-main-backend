@@ -1,7 +1,7 @@
 package main.QuizCraft.service.Llama;
 
 import lombok.RequiredArgsConstructor;
-import main.QuizCraft.response.LlamaResponse;
+import main.QuizCraft.response.MessageResponse;
 import org.springframework.ai.ollama.OllamaChatModel;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class LlamaAiServiceImpl implements LlamaAiService {
     private final OllamaChatModel ollamaChatModel;
 
     @Override
-    public LlamaResponse generateQuiz(String prompt) {
+    public MessageResponse generateQuiz(String prompt) {
         try {
             String formattedPrompt = String.format("Read the following text and create a quiz based on it. The quiz should consist of 4 questions. Each question should have 4 answer options, and only one of them should be correct. Highlight the correct answer. Format the output as follows:\n" +
                     "\n" +
@@ -26,9 +26,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     "Here is the text for the quiz:\n" +
                     "%s", prompt);
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse(llamaMessage);
+            return new MessageResponse(llamaMessage);
         } catch (Exception e) {
-            return new LlamaResponse(
+            return new MessageResponse(
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error generating quiz",
@@ -39,7 +39,7 @@ public class LlamaAiServiceImpl implements LlamaAiService {
     }
 
     @Override
-    public LlamaResponse generateFlashcards(String prompt) {
+    public MessageResponse generateFlashcards(String prompt) {
         try {
             String formattedPrompt = String.format("Read the following text and create flashcards based on it. Each flashcard should have a question on one side and an answer on the other. Format the output as follows:\n" +
                     "\n" +
@@ -50,9 +50,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     "Here is the text for the flashcards:\n" +
                     "%s", prompt);
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse(llamaMessage);
+            return new MessageResponse(llamaMessage);
         } catch (Exception e) {
-            return new LlamaResponse(
+            return new MessageResponse(
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error generating flashcards",
@@ -63,7 +63,7 @@ public class LlamaAiServiceImpl implements LlamaAiService {
     }
 
     @Override
-    public LlamaResponse generateFillInTheBlanks(String prompt) {
+    public MessageResponse generateFillInTheBlanks(String prompt) {
         try {
             String formattedPrompt = String.format(
                     "Read the following text and create a fill-in-the-blank exercise. Remove key words from the text and replace them with blanks (____). Provide the correct answers separately. Format the output as follows:\n" +
@@ -80,9 +80,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     prompt
             );
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse(llamaMessage);
+            return new MessageResponse(llamaMessage);
         } catch (Exception e) {
-            return new LlamaResponse(
+            return new MessageResponse(
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error generating fill-in-the-blank exercise",
@@ -93,7 +93,7 @@ public class LlamaAiServiceImpl implements LlamaAiService {
     }
 
     @Override
-    public LlamaResponse generateSummary(String prompt) {
+    public MessageResponse generateSummary(String prompt) {
         try {
             String formattedPrompt = String.format(
                     "Read the following text and generate a concise summary highlighting the main points. The summary should be no longer than 3-4 sentences. Format the output as follows:\n" +
@@ -105,9 +105,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     prompt
             );
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse(llamaMessage);
+            return new MessageResponse(llamaMessage);
         } catch (Exception e) {
-            return new LlamaResponse(
+            return new MessageResponse(
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error generating summary",
@@ -118,7 +118,7 @@ public class LlamaAiServiceImpl implements LlamaAiService {
     }
 
     @Override
-    public LlamaResponse generateTranslateText(String prompt, String targetLanguage) {
+    public MessageResponse generateTranslateText(String prompt, String targetLanguage) {
         try {
             String formattedPrompt = String.format(
                     "Translate the following text into %s. Format the output as follows:\n" +
@@ -130,9 +130,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     targetLanguage, prompt
             );
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse(llamaMessage);
+            return new MessageResponse(llamaMessage);
         } catch (Exception e) {
-            return new LlamaResponse(
+            return new MessageResponse(
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error translating text",
@@ -143,7 +143,7 @@ public class LlamaAiServiceImpl implements LlamaAiService {
     }
 
     @Override
-    public LlamaResponse generateTrueFalseQuestions(String prompt) {
+    public MessageResponse generateTrueFalseQuestions(String prompt) {
         try {
             String formattedPrompt = String.format(
                     "Read the following text and create 5 True/False questions based on it. Format the output as follows:\n" +
@@ -155,9 +155,9 @@ public class LlamaAiServiceImpl implements LlamaAiService {
                     prompt
             );
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
-            return new LlamaResponse(llamaMessage);
+            return new MessageResponse(llamaMessage);
         } catch (Exception e) {
-            return new LlamaResponse(
+            return new MessageResponse(
                     "http://QuizCraft/problems/lack-of-ai-connection",
                     500,
                     "Error generating True/False questions",

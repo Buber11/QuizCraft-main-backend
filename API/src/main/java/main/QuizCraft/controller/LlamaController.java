@@ -20,28 +20,28 @@ public class LlamaController {
     public <T extends Response> ResponseEntity<T> generateQuiz(
             @RequestBody String promptMessage) {
         final T response = llamaAiService.generateQuiz(promptMessage);
-        return ResponseEntity.status(response.getCode()).body(response);
+        return ResponseEntity.status(response.getCodeHttp()).body(response);
     }
 
     @PostMapping("/flashcard")
     public <T extends Response> ResponseEntity<T> generateFlashcard(
             @RequestBody String promptMessage){
         final T response = llamaAiService.generateFlashcards(promptMessage);
-        return ResponseEntity.status(response.getCode()).body(response);
+        return ResponseEntity.status(response.getCodeHttp()).body(response);
     }
 
     @PostMapping("/fill-in-the-blanks")
     public <T extends Response> ResponseEntity<T> generateFillInTheBlanks(
             @RequestBody String promptMessage) {
         final T response = llamaAiService.generateFillInTheBlanks(promptMessage);
-        return ResponseEntity.status(response.getCode()).body(response);
+        return ResponseEntity.status(response.getCodeHttp()).body(response);
     }
 
     @PostMapping("/summary")
     public <T extends Response> ResponseEntity<T> generateSummary(
             @RequestBody String promptMessage) {
         final T response = llamaAiService.generateSummary(promptMessage);
-        return ResponseEntity.status(response.getCode()).body(response);
+        return ResponseEntity.status(response.getCodeHttp()).body(response);
     }
 
     @PostMapping("/translation")
@@ -49,14 +49,14 @@ public class LlamaController {
             @RequestBody String promptMessage,
             @RequestBody String language){
         final T response = llamaAiService.generateTranslateText(promptMessage, language);
-        return ResponseEntity.status(response.getCode()).body(response);
+        return ResponseEntity.status(response.getCodeHttp()).body(response);
     }
 
     @PostMapping("/true-or-false-questions")
     public <T extends Response> ResponseEntity<T> generateTrueFalseQuestions(
             @RequestBody String promptMessage){
         final T respone = llamaAiService.generateTrueFalseQuestions(promptMessage);
-        return ResponseEntity.status(respone.getCode()).body(respone);
+        return ResponseEntity.status(respone.getCodeHttp()).body(respone);
     }
 
 
