@@ -5,7 +5,8 @@
 
   <ul>
     <li><a href="/" routerLinkActive="active">Home</a></li>
-    <li><a href="/login" routerLinkActive="active">Login</a></li>
+    <li *ngIf="loggedIn"><a href="/" routerLinkActive="active" (click)="logout()">Logout</a></li>
+    <li *ngIf="!loggedIn"><a href="/login" routerLinkActive="active">Login</a></li>
   </ul>
 </nav>
 

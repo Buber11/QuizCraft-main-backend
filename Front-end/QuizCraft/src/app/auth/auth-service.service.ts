@@ -11,8 +11,17 @@ export class AuthService {
   private loggedIn = false;
 
   constructor(private http: HttpClient) {
-    const storedLoggedIn = sessionStorage.getItem('loggedIn');
-    this.loggedIn = storedLoggedIn ? JSON.parse(storedLoggedIn) : false;
+    if (typeof window !== 'undefined' && window.sessionStorage) {
+      try {
+        const storedLoggedIn = sessionStorage.getItem('loggedIn');
+        this.loggedIn = storedLoggedIn ? JSON.parse(storedLoggedIn) : false;
+      } catch (error) {
+        console.error('sessionStorage:', error);
+        this.loggedIn = false;
+      }
+    } else {
+      this.loggedIn = false;
+    }
   }
 
   login(credentials: { username: string; password: string }): Observable<boolean> {
