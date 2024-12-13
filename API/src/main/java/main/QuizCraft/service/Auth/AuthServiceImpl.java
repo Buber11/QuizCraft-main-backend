@@ -8,7 +8,7 @@ import main.QuizCraft.model.user.AuthRequest;
 import main.QuizCraft.model.user.User;
 import main.QuizCraft.repository.UserRepository;
 import main.QuizCraft.response.AuthResponse;
-import main.QuizCraft.security.JwtService;
+import main.QuizCraft.security.JwtServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
@@ -24,7 +24,7 @@ public class AuthServiceImpl implements AuthService{
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
-    private final JwtService jwtService;
+    private final JwtServiceImpl jwtService;
     private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
     @Override

@@ -23,7 +23,7 @@ import java.util.Arrays;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    private final JwtService jwtService;
+    private final JwtServiceImpl jwtService;
     private final UserDetailsService userDetailsService;
     private final HandlerExceptionResolver handlerExceptionResolver;
 
