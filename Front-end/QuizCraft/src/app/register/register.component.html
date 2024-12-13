@@ -1,0 +1,38 @@
+<app-navbar></app-navbar>
+
+<div class="register-container">
+  <div class="register-form">
+    <h2>Rejestracja</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="input-group">
+        <label for="username">Nazwa użytkownika</label>
+        <input
+          type="text"
+          id="username"
+          [(ngModel)]="username"
+          name="username"
+          required
+          placeholder="Wpisz nazwę użytkownika">
+      </div>
+
+      <div class="input-group">
+        <label for="password">Hasło</label>
+        <input
+          type="password"
+          id="password"
+          [(ngModel)]="password"
+          name="password"
+          required
+          placeholder="Wpisz hasło">
+      </div>
+
+      <div *ngIf="errorMessage" class="error-message">
+        <p>{{ errorMessage }}</p>
+      </div>
+      <button type="submit" [disabled]="isSubmitting" class="submit-btn">
+        {{ isSubmitting ? 'Submitting...' : 'Register' }}
+      </button>
+    </form>
+  </div>
+</div>
+

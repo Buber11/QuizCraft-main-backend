@@ -15,7 +15,7 @@
     </div>
 
     <button type="submit" class="cta-button">Log In</button>
-    <button type="button" class="register-button">Register</button>
+    <button [routerLink]="['/register']" class="register-button">Register</button>
 
     <div *ngIf="errorMessage" class="error-message">
       {{ errorMessage }}

@@ -7,6 +7,7 @@ import { DashboardComponent} from './dashboard/dashboard.component';
 import { routes } from './app.routes';
 import {AuthService} from './auth/auth-service.service';
 import {AuthGuard} from './auth/auth.guard';
+import {RegisterComponent} from './register/register.component';
 
 @Component
 ({
@@ -18,6 +19,7 @@ import {AuthGuard} from './auth/auth.guard';
     LoginComponent,
     NavbarComponent,
     DashboardComponent,
+    RegisterComponent,
   ],
   providers: [AuthService,AuthGuard],
   templateUrl: './app.component.html',

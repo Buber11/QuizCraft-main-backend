@@ -1,0 +1,85 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f7fc;  // Slightly off-white background for a softer feel
+  font-family: 'Arial', sans-serif;
+
+  .register-form {
+    background-color: #ffffff;
+    border-radius: 12px;  // Rounded corners for a softer look
+    padding: 40px 30px;  // Slightly adjusted padding for better balance
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);  // Deeper shadow for more contrast
+    width: 100%;
+    max-width: 420px;  // Slightly wider max-width
+    transition: transform 0.3s ease, box-shadow 0.3s ease;  // Subtle animation
+
+    &:hover {
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);  // Deeper shadow on hover
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;  // Increased spacing for visual balance
+      font-size: 26px;  // Larger font size for better readability
+      font-weight: 600;  // Slightly bolder text for emphasis
+      color: #333;
+    }
+
+    .input-group {
+      margin-bottom: 25px;  // Increased space between input fields
+      width: 92%;
+      label {
+        display: block;
+        font-size: 15px;  // Slightly larger label text
+        color: #555;
+        margin-bottom: 8px;
+        font-weight: 500;  // Slightly bolder label text
+      }
+
+      input {
+        width: 100%;
+        padding: 12px 15px;  // Increased padding for a more comfortable input area
+        border: 1px solid #ccc;
+        border-radius: 6px;  // Slightly rounder corners
+        font-size: 16px;
+        color: #333;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;  // Smooth focus transition
+
+        &:focus {
+          outline: none;
+          border-color: #4caf50;  // Highlight border with a fresh green
+          box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);  // Subtle glow effect on focus
+        }
+
+        &::placeholder {
+          color: #aaa;  // Lighter color for placeholder text
+        }
+      }
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      background-color: #4caf50;
+      color: #fff;
+      font-size: 18px;  // Larger font size for the button text
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;  // Smooth transition for hover
+
+      &:hover {
+        background-color: #45a049;
+        transform: translateY(-2px);  // Slight lift effect when hovered
+      }
+
+      &:disabled {
+        background-color: #d1d1d1;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
