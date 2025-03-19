@@ -4,6 +4,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import main.QuizCraft.exception.InvalidCredentialsException;
+import main.QuizCraft.exception.UserNotFoundException;
 import main.QuizCraft.model.user.AuthRequest;
 import main.QuizCraft.model.user.User;
 import main.QuizCraft.repository.UserRepository;
@@ -35,26 +37,14 @@ public class AuthServiceImpl implements AuthService{
         if (userOpt.isEmpty()) {
             logger.warn("Authentication failed: User not found for username: {}", authRequest.username());
             response.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404
-            return new AuthResponse(
-                    "http://QuizCraft/problems/authenticate",
-                    404,
-                    "User not found",
-                    "The username provided does not exist in the system.",
-                    null
-            );
+            throw new UserNotFoundException();
         }
 
         User user = userOpt.get();
         if (!encoder.matches(authRequest.password(), user.getPassword())) {
             logger.warn("Authentication failed: Invalid password for username: {}", authRequest.username());
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
-            return new AuthResponse(
-                    "http://QuizCraft/problems/authenticate",
-                    401,
-                    "Invalid credentials",
-                    "The password provided is incorrect.",
-                    null
-            );
+            throw new InvalidCredentialsException();
         }
 
         logger.info("Authentication successful for username: {}", authRequest.username());
@@ -82,13 +72,7 @@ public class AuthServiceImpl implements AuthService{
             logger.info("User successfully registered: {}", authRequst.username());
         } catch (DataAccessException ex) {
             logger.error("Registration failed: User with username {} already exists.", authRequst.username(), ex);
-            return new AuthResponse(
-                    "http://QuizCraft/problems/change-your-username",
-                    400,
-                    "Your username isn't unique",
-                    "The provided username already exists in the system.",
-                    null
-            );
+            throw new UserNotFoundException();
         }
         return new AuthResponse();
     }
@@ -101,13 +85,7 @@ public class AuthServiceImpl implements AuthService{
         if (userOpt.isEmpty()) {
             logger.warn("Authentication failed: User not found for id: {}", userId );
             response.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404
-            return new AuthResponse(
-                    "http://QuizCraft/problems/authenticate",
-                    404,
-                    "User not found",
-                    "The username provided does not exist in the system.",
-                    null
-            );
+            throw new UserNotFoundException();
         }
         User user = userOpt.get();
         Cookie cookie = jwtService.createJwtCookie(Map.of("user_id", user.getId()),
