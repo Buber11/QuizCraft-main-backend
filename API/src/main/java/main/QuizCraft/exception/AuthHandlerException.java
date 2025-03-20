@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
-public class GlobalHandlerException {
+public class AuthHandlerException {
 
     @ExceptionHandler(value = BadRequestException.class )
-    public AuthResponse handleBadRequest(){
+    public Response<User> handleBadRequestException(){
         return new AuthResponse(
                 "http://QuizCraft/problems/change-your-username",
                 400,
@@ -21,7 +21,7 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(value = InvalidCredentialsException.class)
-    public AuthResponse handleInvalidCredentials(){
+    public Response<User> handleInvalidCredentialsException(){
         return new AuthResponse(
                 "http://QuizCraft/problems/authenticate",
                 401,
@@ -32,7 +32,7 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(value = UserNotFoundException.class)
-    public AuthResponse handleUserNotFound(){
+    public Response<User> handleUserNotFoundException(){
         return new AuthResponse(
                 "http://QuizCraft/problems/authenticate",
                 404,
@@ -41,5 +41,6 @@ public class GlobalHandlerException {
                 null
         );
     }
+
 
 }
