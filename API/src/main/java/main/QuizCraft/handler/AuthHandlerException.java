@@ -47,7 +47,7 @@ public class AuthHandlerException {
                         "http://QuizCraft/problems/authenticate",
                         404,
                         "User not found",
-                        "The username provided does not exist in the system.",
+                        "The username or id provided does not exist in the system.",
                         null
                 ));
     }

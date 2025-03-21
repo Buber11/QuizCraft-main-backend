@@ -5,8 +5,6 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import main.QuizCraft.model.user.User;
 import main.QuizCraft.response.MessageResponse;
-import main.QuizCraft.response.Response;
-import org.aspectj.bridge.Message;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Map;
@@ -34,5 +32,5 @@ public interface JwtService {
 
     Cookie createJwtCookie(Map<String, Object> extraClaims, User user, String nameOfCookie);
 
-    <T extends Response> T validateToken(HttpServletRequest request);
+    MessageResponse validateToken(HttpServletRequest request);
 }
