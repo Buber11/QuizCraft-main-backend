@@ -16,20 +16,20 @@ public class LlamaAiServiceImpl implements LlamaAiService {
     public MessageResponse generateQuiz(String prompt) {
         try {
             String formattedPrompt = String.format(
-                    "Read the following text and create a quiz based on it. The quiz should consist of 4 questions. Each question should have 4 answer options, and only one of them should be correct. Highlight the correct answer. Format the output as follows:\n\n" +
+                    "Read the following text and create a Quiz based on it. The Quiz should consist of 4 questions. Each question should have 4 answer options, and only one of them should be correct. Highlight the correct answer. Format the output as follows:\n\n" +
                             "    Question: [Your question here]\n" +
                             "        a) [Option 1]\n" +
                             "        b) [Option 2]\n" +
                             "        c) [Option 3]\n" +
                             "        d) [Option 4]\n" +
                             "        Correct Answer: [Correct option]\n\n" +
-                            "Here is the text for the quiz:\n%s",
+                            "Here is the text for the Quiz:\n%s",
                     prompt
             );
             final String llamaMessage = ollamaChatModel.call(formattedPrompt);
             return new MessageResponse(llamaMessage);
         } catch (Exception e) {
-            throw new AiResponseException("Error generating quiz", "Error generating quiz: " + e.getMessage());
+            throw new AiResponseException("Error generating Quiz", "Error generating Quiz: " + e.getMessage());
         }
     }
 
@@ -39,8 +39,8 @@ public class LlamaAiServiceImpl implements LlamaAiService {
             String formattedPrompt = String.format(
                     "Read the following text and create flashcards based on it. Each flashcard should have a question on one side and an answer on the other. Format the output as follows:\n\n" +
                             "    Flashcard:\n" +
-                            "        Question: [Your question here]\n" +
-                            "        Answer: [Answer here]\n\n" +
+                            "        Front: [Your question here]\n" +
+                            "        Back: [Answer here]\n\n" +
                             "Here is the text for the flashcards:\n%s",
                     prompt
             );
@@ -111,8 +111,8 @@ public class LlamaAiServiceImpl implements LlamaAiService {
         try {
             String formattedPrompt = String.format(
                     "Read the following text and create 5 True/False questions based on it. Format the output as follows:\n\n" +
-                            "    True/False Question:\n" +
-                            "    [Your statement here] (True/False)\n\n" +
+                            "    True or False Question:\n" +
+                            "    [Your statement here] (if statement is true then write True/ if statement is false then write False)\n\n" +
                             "Here is the text to process:\n%s",
                     prompt
             );

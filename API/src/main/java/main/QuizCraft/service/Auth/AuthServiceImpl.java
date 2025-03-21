@@ -6,10 +6,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import main.QuizCraft.exception.InvalidCredentialsException;
 import main.QuizCraft.exception.UserNotFoundException;
-import main.QuizCraft.model.user.AuthRequest;
+import main.QuizCraft.model.user.request.AuthRequest;
 import main.QuizCraft.model.user.User;
 import main.QuizCraft.repository.UserRepository;
-import main.QuizCraft.response.AuthResponse;
 import main.QuizCraft.security.JwtServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +29,7 @@ public class AuthServiceImpl implements AuthService{
     private static final Logger logger = LoggerFactory.getLogger(AuthServiceImpl.class);
 
     @Override
-    public AuthResponse authenticate(AuthRequest authRequest, HttpServletResponse response) {
+    public void authenticate(AuthRequest authRequest, HttpServletResponse response) {
         logger.info("Attempting authentication for username: {}", authRequest.username());
         Optional<User> userOpt = userRepository.findByUsername(authRequest.username());
 
@@ -54,11 +53,10 @@ public class AuthServiceImpl implements AuthService{
                 "jwt_token");
         response.addCookie(cookie);
 
-        return new AuthResponse();
     }
 
     @Override
-    public AuthResponse register(AuthRequest authRequst) {
+    public void register(AuthRequest authRequst) {
         logger.info("Attempting to register a new user: {}", authRequst.username());
 
         User newUser = new User(
@@ -72,13 +70,14 @@ public class AuthServiceImpl implements AuthService{
             logger.info("User successfully registered: {}", authRequst.username());
         } catch (DataAccessException ex) {
             logger.error("Registration failed: User with username {} already exists.", authRequst.username(), ex);
+            // to do
             throw new UserNotFoundException();
         }
-        return new AuthResponse();
     }
 
+
     @Override
-    public AuthResponse renewCookie(HttpServletRequest request, HttpServletResponse response) {
+    public void renewCookie(HttpServletRequest request, HttpServletResponse response) {
         long userId = (long) request.getAttribute("user_id");
         Optional<User> userOpt = userRepository.findById(userId);
 
@@ -93,7 +92,6 @@ public class AuthServiceImpl implements AuthService{
                 "jwt_token");
         response.addCookie(cookie);
 
-        return new AuthResponse();
     }
 
 }

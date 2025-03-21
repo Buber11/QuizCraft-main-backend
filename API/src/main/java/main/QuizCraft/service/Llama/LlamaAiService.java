@@ -1,13 +1,13 @@
 package main.QuizCraft.service.Llama;
 
-import main.QuizCraft.response.Response;
+import main.QuizCraft.response.MessageResponse;
 
 public interface LlamaAiService {
 
-    <T extends  Response> T generateQuiz(String prompt);
-    <T extends  Response> T generateFlashcards(String prompt);
-    <T extends  Response> T generateFillInTheBlanks(String prompt);
-    <T extends  Response> T generateSummary(String prompt);
-    <T extends  Response> T generateTranslateText(String prompt, String targetLanguage);
-    <T extends  Response> T generateTrueFalseQuestions(String prompt);
+     MessageResponse generateQuiz(String prompt);
+     MessageResponse generateFlashcards(String prompt);
+     MessageResponse generateFillInTheBlanks(String prompt);
+     MessageResponse generateSummary(String prompt);
+     MessageResponse generateTranslateText(String prompt, String targetLanguage);
+     MessageResponse generateTrueFalseQuestions(String prompt);
 }
