@@ -6,13 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
 
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class Flashcard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +27,20 @@ public class Flashcard {
 
     @Column(nullable = false)
     private String back;
+
+    public Flashcard(String front, String back) {
+        this.front = front;
+        this.back = back;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Flashcard flashcard)) return false;
+        return Objects.equals(id, flashcard.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }

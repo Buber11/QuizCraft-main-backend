@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Objects;
+
 @Entity
 @Getter
 @Setter
@@ -34,4 +36,15 @@ public class Quiz {
 
     @Column(name = "bad_answer_3", nullable = false, length = 255)
     private String badAnswer3;
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Quiz quiz)) return false;
+        return Objects.equals(id, quiz.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
