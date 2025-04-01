@@ -96,8 +96,8 @@ public class AuthServiceImpl implements AuthService, UserVerificationService{
     }
 
     @Override
-    public void checkAccessForUserToObject(HttpServletRequest request, long ownerId) {
-        checkAccessForUser(request,ownerId);
+    public void verifyOwner(HttpServletRequest request, Long ownerId) {
+        checkAccessForUser(request, ownerId);
     }
 
     private void checkAccessForUser(HttpServletRequest request, Long userRequestId){
