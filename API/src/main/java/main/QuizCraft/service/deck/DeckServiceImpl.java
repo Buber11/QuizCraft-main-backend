@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class DeckServiceImpl implements DeckService{
+public class DeckServiceImpl implements DeckService, DeckOwnerSupplierService{
 
     private final DeckRepository deckRepository;
     private final UserRepository userRepository;
@@ -144,5 +144,11 @@ public class DeckServiceImpl implements DeckService{
         Long userId = (Long) httpServletRequest.getAttribute("user_id");
         logger.debug("Current user id from request: {}", userId);
         return userId;
+    }
+
+    @Override
+    public Long getOwnerId(Long deckId) {
+
+        return 0L;
     }
 }

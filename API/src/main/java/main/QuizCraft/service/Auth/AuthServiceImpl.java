@@ -13,6 +13,7 @@ import main.QuizCraft.security.JwtServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class AuthServiceImpl implements AuthService{
+public class AuthServiceImpl implements AuthService, UserVerificationService{
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder encoder;
@@ -92,6 +93,26 @@ public class AuthServiceImpl implements AuthService{
                 "jwt_token");
         response.addCookie(cookie);
 
+    }
+
+    @Override
+    public void checkAccessForUserToObject(HttpServletRequest request, long ownerId) {
+        checkAccessForUser(request,ownerId);
+    }
+
+    private void checkAccessForUser(HttpServletRequest request, Long userRequestId){
+        Long currentUserId = getCurrentUserId(request);
+        if (!currentUserId.equals(userRequestId)) {
+            logger.error("Access denied: User with id {} is not authorized to access this deck.", currentUserId);
+            throw new AccessDeniedException("You are not the owner of this deck");
+        }
+        logger.info("Access granted for user with id: {}", currentUserId);
+    }
+
+    private Long getCurrentUserId(HttpServletRequest httpServletRequest){
+        Long userId = (Long) httpServletRequest.getAttribute("user_id");
+        logger.debug("Current user id from request: {}", userId);
+        return userId;
     }
 
 }
