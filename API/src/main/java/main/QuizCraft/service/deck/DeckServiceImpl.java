@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class DeckServiceImpl implements DeckService{
+public class DeckServiceImpl implements DeckService, DeckAccessService {
 
     private final DeckRepository deckRepository;
     private final UserRepository userRepository;
@@ -126,4 +126,18 @@ public class DeckServiceImpl implements DeckService{
         return deck;
     }
 
+    @Override
+    public Long getOwnerId(Long deckId) {
+        return deckRepository.findOwnerId(deckId)
+                .orElseThrow(() -> {
+                    logger.warn("Deck not found for id: {}", deckId);
+                    return new ResourceNotFoundException("Deck not found");
+                });
+
+    }
+
+    @Override
+    public Deck getDeckReference(Long deckId) {
+        return deckRepository.getReferenceById(deckId);
+    }
 }

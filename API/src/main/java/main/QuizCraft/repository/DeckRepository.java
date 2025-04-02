@@ -38,4 +38,7 @@ public interface DeckRepository extends JpaRepository<Deck,Long> {
     @Query("SELECT d FROM Deck d WHERE d.id = :id")
     Optional<Deck> findDeckByIdWithUser(@Param("id") Long id);
 
+    @Query(value = "SELECT d.user_id FROM deck d WHERE d.id = :id", nativeQuery = true)
+    Optional<Long> findOwnerId(@Param("id")Long id);
+
 }

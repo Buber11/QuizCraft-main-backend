@@ -97,12 +97,8 @@ public class AuthServiceImpl implements AuthService, UserVerificationService{
 
     @Override
     public void verifyOwner(HttpServletRequest request, Long ownerId) {
-        checkAccessForUser(request, ownerId);
-    }
-
-    private void checkAccessForUser(HttpServletRequest request, Long userRequestId){
         Long currentUserId = getCurrentUserId(request);
-        if (!currentUserId.equals(userRequestId)) {
+        if (!currentUserId.equals(ownerId)) {
             logger.error("Access denied: User with id {} is not authorized to access this deck.", currentUserId);
             throw new AccessDeniedException("You are not the owner of this deck");
         }

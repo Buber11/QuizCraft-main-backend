@@ -10,10 +10,15 @@ import javax.validation.constraints.Pattern;
 @AllArgsConstructor
 public class FlashcardRequest {
 
+    @NotNull(message = "deck id of flashcard have to contain text")
+    @Pattern(regexp = "[0-9]",message = "deck id have to be number")
+    private Long deckId;
+
     @NotNull(message = "Front of flashcard have to contain text")
     private String front;
 
     @NotNull(message = "Back of flashcard have to contain text")
     private String back;
+
 
 }

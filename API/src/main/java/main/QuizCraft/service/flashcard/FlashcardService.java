@@ -21,6 +21,7 @@ public interface FlashcardService {
                          FlashcardRequest flashcardRequest,
                          HttpServletRequest httpServletRequest);
 
-    void saveFlashcard(FlashcardRequest flashcardRequest);
+    void saveFlashcard(FlashcardRequest flashcardRequest,
+                       HttpServletRequest httpServletRequest);
 
 }
