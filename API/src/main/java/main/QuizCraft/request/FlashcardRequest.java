@@ -1,4 +1,4 @@
-package main.QuizCraft.model.deck.request;
+package main.QuizCraft.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,10 +1,8 @@
 package main.QuizCraft.service.flashcard;
 
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import main.QuizCraft.model.deck.dto.FlashcardDTO;
-import main.QuizCraft.model.deck.request.FlashcardRequest;
-import main.QuizCraft.repository.FlashcardRepository;
+import main.QuizCraft.dto.FlashcardDTO;
+import main.QuizCraft.request.FlashcardRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

@@ -4,8 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import main.QuizCraft.exception.ResourceNotFoundException;
 import main.QuizCraft.model.deck.Flashcard;
-import main.QuizCraft.model.deck.dto.FlashcardDTO;
-import main.QuizCraft.model.deck.request.FlashcardRequest;
+import main.QuizCraft.dto.FlashcardDTO;
+import main.QuizCraft.request.FlashcardRequest;
 import main.QuizCraft.repository.FlashcardRepository;
 import main.QuizCraft.service.Auth.UserVerificationService;
 import main.QuizCraft.service.deck.DeckAccessService;
@@ -62,7 +62,7 @@ public class FlashcardServiceImpl implements FlashcardService{
         Flashcard flashcard = flashcardRepository.findById(id)
                 .orElseThrow(() -> {
                     LOGGER.warn("Flashcard not found for ID: {}", id);
-                    return new ResourceNotFoundException("Flashcard not found");
+                    return new ResourceNotFoundException("Flashcard not found",id,"Flashcard");
                 });
 
         flashcard.setFront(flashcardRequest.getFront());
@@ -93,7 +93,7 @@ public class FlashcardServiceImpl implements FlashcardService{
         return flashcardRepository.loadDeckId(id)
                 .orElseThrow(() -> {
                     LOGGER.warn("Flashcard not found for ID: {}", id);
-                    return new ResourceNotFoundException("Flashcard not found");
+                    return new ResourceNotFoundException("Flashcard not found",id,"Flashcard");
                 });
     }
 }

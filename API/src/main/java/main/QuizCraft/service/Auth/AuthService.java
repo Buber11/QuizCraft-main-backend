@@ -2,7 +2,7 @@ package main.QuizCraft.service.Auth;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import main.QuizCraft.model.user.request.AuthRequest;
+import main.QuizCraft.request.AuthRequest;
 
 public interface AuthService {
 

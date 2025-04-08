@@ -18,9 +18,9 @@ public class DeckHandlerException {
                 .body( FailureResponse.builder()
                         .title(e.getMessage())
                         .code(404)
-                        .instance(null)
+                        .instance(e.getInstanceName() + "?id=" + e.getId())
                         .status("http://QuizCraft/problems/resourceNotFound/deck")
-                        .detail("You have to user diffrent id deck")
+                        .detail("You have to use diffrent id")
                         .build()
                 );
     }
@@ -34,7 +34,7 @@ public class DeckHandlerException {
                         .code(404)
                         .instance(null)
                         .status("http://QuizCraft/problems/resourceNotFound/deck")
-                        .detail("You have to user diffrent id deck")
+                        .detail("You have to use diffrent id")
                         .build()
                 );
     }
