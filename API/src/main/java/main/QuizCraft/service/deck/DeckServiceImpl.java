@@ -5,8 +5,8 @@ import lombok.RequiredArgsConstructor;
 import main.QuizCraft.exception.ResourceNotFoundException;
 import main.QuizCraft.exception.UserNotFoundException;
 import main.QuizCraft.model.deck.Deck;
-import main.QuizCraft.model.deck.dto.DeckDTO;
-import main.QuizCraft.model.deck.request.DeckRequest;
+import main.QuizCraft.dto.DeckDTO;
+import main.QuizCraft.request.DeckRequest;
 import main.QuizCraft.model.user.User;
 import main.QuizCraft.repository.DeckRepository;
 import main.QuizCraft.repository.UserRepository;
@@ -118,7 +118,7 @@ public class DeckServiceImpl implements DeckService, DeckAccessService {
         Deck deck = deckRepository.findDeckByIdWithUser(deckId)
                 .orElseThrow(() -> {
                     logger.warn("Deck not found for id: {}", deckId);
-                    return new ResourceNotFoundException("Deck not found");
+                    return new ResourceNotFoundException("Deck not found", deckId, "Deck");
                 });
 
         logger.info("Deck found with name: {}", deck.getName());
@@ -131,7 +131,7 @@ public class DeckServiceImpl implements DeckService, DeckAccessService {
         return deckRepository.findOwnerId(deckId)
                 .orElseThrow(() -> {
                     logger.warn("Deck not found for id: {}", deckId);
-                    return new ResourceNotFoundException("Deck not found");
+                    return new ResourceNotFoundException("Deck not found", deckId, "Deck");
                 });
 
     }

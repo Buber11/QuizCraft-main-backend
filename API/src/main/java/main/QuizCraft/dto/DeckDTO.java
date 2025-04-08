@@ -1,4 +1,4 @@
-package main.QuizCraft.model.deck.dto;
+package main.QuizCraft.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

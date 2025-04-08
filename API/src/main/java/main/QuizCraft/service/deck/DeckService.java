@@ -1,8 +1,8 @@
 package main.QuizCraft.service.deck;
 
 import jakarta.servlet.http.HttpServletRequest;
-import main.QuizCraft.model.deck.dto.DeckDTO;
-import main.QuizCraft.model.deck.request.DeckRequest;
+import main.QuizCraft.dto.DeckDTO;
+import main.QuizCraft.request.DeckRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

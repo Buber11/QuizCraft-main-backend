@@ -2,10 +2,8 @@ package main.QuizCraft.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
-import main.QuizCraft.model.deck.Flashcard;
-import main.QuizCraft.model.deck.dto.DeckDTO;
-import main.QuizCraft.model.deck.dto.FlashcardDTO;
-import main.QuizCraft.model.deck.request.FlashcardRequest;
+import main.QuizCraft.dto.FlashcardDTO;
+import main.QuizCraft.request.FlashcardRequest;
 import main.QuizCraft.service.flashcard.FlashcardService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,8 +11,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/deck/")

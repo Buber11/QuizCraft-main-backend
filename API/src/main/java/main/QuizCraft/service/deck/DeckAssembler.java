@@ -2,9 +2,7 @@ package main.QuizCraft.service.deck;
 
 import main.QuizCraft.controller.DeckController;
 import main.QuizCraft.model.deck.Deck;
-import main.QuizCraft.model.deck.dto.DeckDTO;
-import main.QuizCraft.model.deck.request.DeckRequest;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
+import main.QuizCraft.dto.DeckDTO;
 import org.springframework.stereotype.Component;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;

@@ -1,7 +1,7 @@
 package main.QuizCraft.repository;
 
 import main.QuizCraft.model.deck.TrueOrFalse;
-import main.QuizCraft.model.deck.dto.TrueOrFalseDTO;
+import main.QuizCraft.dto.TrueOrFalseDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TrueOrFalseRepository extends JpaRepository<TrueOrFalse, Long> {
 
-    @Query("SELECT NEW main.QuizCraft.model.deck.dto.TrueOrFalseDTO(q.question," +
+    @Query("SELECT NEW main.QuizCraft.dto.TrueOrFalseDTO(q.question," +
             " q.trueAnswer," +
             " q.falseAnswer)" +
             "FROM TrueOrFalse q " +
