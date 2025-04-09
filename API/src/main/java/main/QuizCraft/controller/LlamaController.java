@@ -1,6 +1,8 @@
 package main.QuizCraft.controller;
 
 import lombok.RequiredArgsConstructor;
+import main.QuizCraft.dto.FlashcardDTO;
+import main.QuizCraft.dto.QuizDTO;
 import main.QuizCraft.response.MessageResponse;
 import main.QuizCraft.service.Llama.LlamaAiService;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController()
 @RequestMapping("api/v1/ai/generation")
 @RequiredArgsConstructor
@@ -17,18 +21,18 @@ public class LlamaController {
 
     private final LlamaAiService llamaAiService;
 
-    @PostMapping("/Quiz")
-    public  ResponseEntity generateQuiz(
+    @PostMapping("/quiz")
+    public  ResponseEntity<List<QuizDTO>> generateQuiz(
             @RequestBody String promptMessage) {
-        final MessageResponse messageResponse = llamaAiService.generateQuiz(promptMessage);
-        return ResponseEntity.status(HttpStatus.OK).body(messageResponse);
+        final List<QuizDTO> quizDTOS = llamaAiService.generateQuiz(promptMessage);
+        return ResponseEntity.ok(quizDTOS);
     }
 
     @PostMapping("/flashcard")
-    public  ResponseEntity generateFlashcard(
+    public  ResponseEntity<List<FlashcardDTO>> generateFlashcard(
             @RequestBody String promptMessage){
-        final MessageResponse messageResponse = llamaAiService.generateFlashcards(promptMessage);
-        return ResponseEntity.status(HttpStatus.OK).body(messageResponse);
+        final List<FlashcardDTO> flashcards = llamaAiService.generateFlashcards(promptMessage);
+        return ResponseEntity.ok(flashcards);
     }
 
     @PostMapping("/fill-in-the-blanks")

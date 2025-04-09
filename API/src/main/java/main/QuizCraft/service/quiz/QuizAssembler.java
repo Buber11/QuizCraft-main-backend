@@ -10,6 +10,14 @@ import main.QuizCraft.controller.QuizController;
 @Component
 public class QuizAssembler {
 
+    public QuizDTO addCreateLink(QuizDTO quizDTO) {
+        quizDTO.add(WebMvcLinkBuilder.linkTo(
+                WebMvcLinkBuilder.methodOn(QuizController.class)
+                        .createQuiz(null, null))
+                .withRel("create"));
+        return quizDTO;
+    }
+
     public QuizDTO toDTO(Quiz quiz) {
         QuizDTO quizDTO = new QuizDTO(
                 quiz.getId(),

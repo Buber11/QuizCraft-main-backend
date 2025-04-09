@@ -14,6 +14,13 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @Component
 public class FlashcardAssembler {
 
+    public FlashcardDTO toModel(String front, String back ){
+        FlashcardDTO flashcardDTO = new FlashcardDTO();
+        flashcardDTO.setFront(front);
+        flashcardDTO.setBack(back);
+        return addLinkToGeneratedFromAi(flashcardDTO);
+    }
+
     public FlashcardDTO toModel(Flashcard flashcard, Long deckId){
         FlashcardDTO flashcardDTO = new FlashcardDTO(
                 flashcard.getId(),
@@ -35,6 +42,7 @@ public class FlashcardAssembler {
     }
 
     private FlashcardDTO addLink(Long deckId, FlashcardDTO flashcardDTO){
+
         Link allFlashcardsLink = linkTo(methodOn(FlashcardController.class)
                 .getFlashcards(deckId, Pageable.unpaged(), null))
                 .withRel("all-flashcards");
@@ -48,6 +56,14 @@ public class FlashcardAssembler {
                 .saveFlashcard(null, null))
                 .withRel("create");
         flashcardDTO.add(allFlashcardsLink, updateLink, deleteLink, createLink);
+        return flashcardDTO;
+    }
+
+    private FlashcardDTO addLinkToGeneratedFromAi(FlashcardDTO flashcardDTO){
+        Link createLink = linkTo(methodOn(FlashcardController.class)
+                .saveFlashcard(null, null))
+                .withRel("create");
+        flashcardDTO.add(createLink);
         return flashcardDTO;
     }
 
