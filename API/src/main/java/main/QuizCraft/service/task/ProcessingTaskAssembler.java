@@ -43,5 +43,10 @@ public class ProcessingTaskAssembler {
                         WebMvcLinkBuilder.methodOn(TaskManagerController.class)
                                 .getTask(taskId))
                 .withRel("object"));
+
+        dto.add(WebMvcLinkBuilder.linkTo(
+                        WebMvcLinkBuilder.methodOn(TaskManagerController.class)
+                                .getTaskResult(taskId))
+                .withRel("result"));
     }
 }

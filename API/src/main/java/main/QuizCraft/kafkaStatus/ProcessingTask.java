@@ -20,4 +20,5 @@ public class ProcessingTask<T> {
     private T result;
     private Instant createdAt;
     private Instant completedAt;
+    private Instant expirationAt;
 }

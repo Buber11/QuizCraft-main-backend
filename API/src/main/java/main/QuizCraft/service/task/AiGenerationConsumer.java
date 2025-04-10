@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 @Service
@@ -65,7 +66,9 @@ public class AiGenerationConsumer {
             }
 
             processingTask.setStatus(TaskStatus.COMPLETED);
-            processingTask.setCreatedAt(Instant.now());
+            processingTask.setCompletedAt(Instant.now());
+            processingTask.setExpirationAt(processingTask.getCompletedAt().plus(5, ChronoUnit.MINUTES));
+
             taskManagerService.updateTask(processingTask);
             log.info("Task completed successfully: taskId={}", taskId);
         } catch (Exception e) {

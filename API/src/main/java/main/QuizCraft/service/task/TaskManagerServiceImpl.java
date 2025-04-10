@@ -7,6 +7,7 @@ import main.QuizCraft.exception.ProcessingTaskException;
 import main.QuizCraft.kafkaStatus.MethodProcessingType;
 import main.QuizCraft.kafkaStatus.ProcessingTask;
 import main.QuizCraft.kafkaStatus.TaskStatus;
+import main.QuizCraft.mapStruct.ExpirationConcurrentHashMap;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RequiredArgsConstructor
 public class TaskManagerServiceImpl implements TaskManagerService{
 
-    private final Map<String, ProcessingTask> tasks = new ConcurrentHashMap<>();
+    private final Map<String, ProcessingTask> tasks = new ExpirationConcurrentHashMap();
     private final ProcessingTaskAssembler processingTaskAssembler;
 
     @Override
@@ -33,6 +34,7 @@ public class TaskManagerServiceImpl implements TaskManagerService{
                 parametres,
                 null,
                 Instant.now(),
+                null,
                 null
         );
         tasks.put(taskId, task);
@@ -65,5 +67,15 @@ public class TaskManagerServiceImpl implements TaskManagerService{
     public ProcessingTaskStatusDto getTaskStatusDto(String taskId) {
         ProcessingTask processingTask = tasks.get(taskId);
         return processingTaskAssembler.toStatusDTO(processingTask);
+    }
+
+    @Override
+    public <T> T getTaskResult(String taskId) {
+        ProcessingTask processingTask = tasks.get(taskId);
+        if(processingTask.getResult() != null) {
+            return (T) processingTask.getResult();
+        }else {
+            throw new ProcessingTaskException(String.format("Result not found for task with ID %s", taskId));
+        }
     }
 }

@@ -13,4 +13,5 @@ public interface TaskManagerService {
     void updateTask(ProcessingTask processingTask);
     ProcessingTaskDto getTaskDto(String taskId);
     ProcessingTaskStatusDto getTaskStatusDto(String taskId);
+    <T> T getTaskResult(String taskId);
 }

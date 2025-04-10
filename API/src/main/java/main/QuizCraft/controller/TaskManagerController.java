@@ -28,4 +28,9 @@ public class TaskManagerController {
     public ResponseEntity<ProcessingTaskStatusDto> getTask(@PathVariable String taskId) {
         return ResponseEntity.ok(taskManagerService.getTaskStatusDto(taskId));
     }
+
+    @GetMapping("/{taskId}/result")
+    public ResponseEntity<?> getTaskResult(@PathVariable String taskId) {
+        return ResponseEntity.ok(taskManagerService.getTaskResult(taskId));
+    }
 }
