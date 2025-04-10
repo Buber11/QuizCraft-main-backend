@@ -29,6 +29,7 @@ public class LlamaAiServiceImpl implements LlamaAiService{
     private final BeanFactory beanFactory;
     private final FlashcardAssembler flashcardAssembler;
     private final QuizAssembler quizAssembler;
+    private final Model
 
     @Override
     public List<QuizDTO> generateQuiz(String prompt) {
