@@ -175,25 +175,6 @@ public class LlamaAiServiceImpl implements LlamaAiService{
         }
     }
 
-    @Override
-    public MessageResponse generateTranslateText(String prompt, String targetLanguage) {
-        try {
-            String formattedPrompt = String.format(
-                    "Translate the following text into %s. Format the output as follows:\n\n" +
-                            "    Translated Text:\n" +
-                            "    [Your translated text here]\n\n" +
-                            "Here is the text to translate:\n%s",
-                    targetLanguage, prompt
-            );
-            final ChatResponse llamaMessage = ollamaChatModel.call(
-                    new Prompt(formattedPrompt, beanFactory.getBean("deepseek-r1", OllamaOptions.class))
-            );
-            System.out.println(llamaMessage.getResults().toString());
-            return new MessageResponse(llamaMessage.toString());
-        } catch (Exception e) {
-            throw new AiResponseException("Error translating text", "Error translating text: " + e.getMessage());
-        }
-    }
 
     @Override
     public MessageResponse generateTrueFalseQuestions(String prompt) {

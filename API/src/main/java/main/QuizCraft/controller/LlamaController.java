@@ -1,69 +1,63 @@
 package main.QuizCraft.controller;
 
+
 import lombok.RequiredArgsConstructor;
-import main.QuizCraft.dto.FlashcardDTO;
-import main.QuizCraft.dto.QuizDTO;
-import main.QuizCraft.response.MessageResponse;
-import main.QuizCraft.service.Llama.LlamaAiService;
+import main.QuizCraft.dto.ProcessingTaskStatusDto;
+import main.QuizCraft.service.task.AiGenerationProducer;
+import main.QuizCraft.kafkaStatus.MethodProcessingType;
+import main.QuizCraft.kafkaStatus.ProcessingTask;
+import main.QuizCraft.service.task.TaskManagerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController()
+@RestController
 @RequestMapping("api/v1/ai/generation")
 @RequiredArgsConstructor
 public class LlamaController {
 
-    private final LlamaAiService llamaAiService;
+    private final TaskManagerService taskManagerService;
+    private final AiGenerationProducer aiGenerationProducer;
 
     @PostMapping("/quiz")
-    public  ResponseEntity<List<QuizDTO>> generateQuiz(
-            @RequestBody String promptMessage) {
-        final List<QuizDTO> quizDTOS = llamaAiService.generateQuiz(promptMessage);
-        return ResponseEntity.ok(quizDTOS);
+    public ResponseEntity<ProcessingTaskStatusDto> generateQuiz(@RequestBody String promptMessage) {
+        String taskId = taskManagerService.createTask(
+                List.of(promptMessage), MethodProcessingType.QUIZ_PROCESSING);
+        aiGenerationProducer.sendMessage(taskManagerService.getTask(taskId));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(taskManagerService.getTaskStatusDto(taskId));
     }
 
     @PostMapping("/flashcard")
-    public  ResponseEntity<List<FlashcardDTO>> generateFlashcard(
-            @RequestBody String promptMessage){
-        final List<FlashcardDTO> flashcards = llamaAiService.generateFlashcards(promptMessage);
-        return ResponseEntity.ok(flashcards);
+    public ResponseEntity<ProcessingTaskStatusDto> generateFlashcard(@RequestBody String promptMessage) {
+        String taskId = taskManagerService.createTask(
+                List.of(promptMessage), MethodProcessingType.FLASHCARD_PROCESSING);
+        aiGenerationProducer.sendMessage(taskManagerService.getTask(taskId));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(taskManagerService.getTaskStatusDto(taskId));
     }
 
     @PostMapping("/fill-in-the-blanks")
-    public ResponseEntity generateFillInTheBlanks(
-            @RequestBody String promptMessage) {
-        final MessageResponse response = llamaAiService.generateFillInTheBlanks(promptMessage);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    public ResponseEntity<ProcessingTaskStatusDto> generateFillInTheBlanks(@RequestBody String promptMessage) {
+        String taskId = taskManagerService.createTask(
+                List.of(promptMessage), MethodProcessingType.FILL_IN_THE_BLANK_PROCESSING);
+        aiGenerationProducer.sendMessage(taskManagerService.getTask(taskId));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(taskManagerService.getTaskStatusDto(taskId));
     }
 
     @PostMapping("/summary")
-    public ResponseEntity generateSummary(
-            @RequestBody String promptMessage) {
-        final MessageResponse response = llamaAiService.generateSummary(promptMessage);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
-    }
-
-    @PostMapping("/translation")
-    public ResponseEntity generateTranslatedText(
-            @RequestBody String promptMessage,
-            @RequestBody String language){
-        final MessageResponse response = llamaAiService.generateTranslateText(promptMessage, language);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+    public ResponseEntity<ProcessingTaskStatusDto> generateSummary(@RequestBody String promptMessage) {
+        String taskId = taskManagerService.createTask(
+                List.of(promptMessage), MethodProcessingType.SUMMARY_PROCESSING);
+        aiGenerationProducer.sendMessage(taskManagerService.getTask(taskId));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(taskManagerService.getTaskStatusDto(taskId));
     }
 
     @PostMapping("/true-or-false-questions")
-    public ResponseEntity generateTrueFalseQuestions(
-            @RequestBody String promptMessage){
-        final MessageResponse respone = llamaAiService.generateTrueFalseQuestions(promptMessage);
-        return ResponseEntity.status(HttpStatus.OK).body(respone);
+    public ResponseEntity<ProcessingTaskStatusDto> generateTrueFalseQuestions(@RequestBody String promptMessage) {
+        String taskId = taskManagerService.createTask(
+                List.of(promptMessage), MethodProcessingType.TRUE_FALSE_PROCESSING);
+        aiGenerationProducer.sendMessage(taskManagerService.getTask(taskId));
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(taskManagerService.getTaskStatusDto(taskId));
     }
-
-
-
 }

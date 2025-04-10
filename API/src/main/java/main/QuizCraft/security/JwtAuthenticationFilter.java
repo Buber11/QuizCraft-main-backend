@@ -40,7 +40,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-
+        System.out.println(requestURI);
         String token = jwtService.extractToken(request);
 
         if (token != null) {

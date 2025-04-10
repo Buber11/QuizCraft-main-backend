@@ -17,13 +17,8 @@ import java.util.Objects;
 @NamedEntityGraph(name = "Deck.withQuizzes",
         attributeNodes = @NamedAttributeNode("quizzes")
 )
-
 @NamedEntityGraph(name = "Deck.withFlashcards",
         attributeNodes = @NamedAttributeNode("flashcards")
-)
-
-@NamedEntityGraph(name = "Deck.withTrueOrFalseQuestions",
-        attributeNodes = @NamedAttributeNode("trueOrFalseQuestions")
 )
 @NamedEntityGraph(name = "Deck.withUser",
         attributeNodes = @NamedAttributeNode("owner")
@@ -53,13 +48,6 @@ public class Deck {
             fetch = FetchType.LAZY
     )
     private List<Quiz> quizzes;
-
-    @OneToMany(mappedBy = "deck",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY
-    )
-    private List<TrueOrFalse> trueOrFalseQuestions;
 
     @Override
     public boolean equals(Object o) {
@@ -126,32 +114,8 @@ public class Deck {
         }
     }
 
-    public void addTrueOrFalseQuestion(TrueOrFalse question) {
-        if (trueOrFalseQuestions == null) {
-            trueOrFalseQuestions = new ArrayList<>();
-        }
-        trueOrFalseQuestions.add(question);
-        question.setDeck(this);
-    }
 
-    public void addTrueOrFalseQuestions(List<TrueOrFalse> questions) {
-        if (questions != null) {
-            questions.forEach(this::addTrueOrFalseQuestion);
-        }
-    }
 
-    public void removeTrueOrFalseQuestion(TrueOrFalse question) {
-        if (trueOrFalseQuestions != null) {
-            trueOrFalseQuestions.remove(question);
-            question.setDeck(null);
-        }
-    }
-
-    public void removeTrueOrFalseQuestions(List<TrueOrFalse> questions) {
-        if (questions != null) {
-            questions.forEach(this::removeTrueOrFalseQuestion);
-        }
-    }
 
 
 }

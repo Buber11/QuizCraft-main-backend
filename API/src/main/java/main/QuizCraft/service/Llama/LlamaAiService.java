@@ -12,6 +12,5 @@ public interface LlamaAiService {
      List<FlashcardDTO> generateFlashcards(String prompt);
      MessageResponse generateFillInTheBlanks(String prompt);
      MessageResponse generateSummary(String prompt);
-     MessageResponse generateTranslateText(String prompt, String targetLanguage);
      MessageResponse generateTrueFalseQuestions(String prompt);
 }
