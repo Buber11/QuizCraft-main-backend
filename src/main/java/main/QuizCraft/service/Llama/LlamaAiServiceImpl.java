@@ -6,20 +6,17 @@ import lombok.RequiredArgsConstructor;
 import main.QuizCraft.dto.FlashcardDTO;
 import main.QuizCraft.dto.QuizDTO;
 import main.QuizCraft.exception.AiResponseException;
-import main.QuizCraft.model.deck.Quiz;
 import main.QuizCraft.response.MessageResponse;
 import main.QuizCraft.service.flashcard.FlashcardAssembler;
 import main.QuizCraft.service.quiz.QuizAssembler;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.ollama.OllamaChatModel;
-import org.springframework.ai.ollama.api.OllamaModel;
 import org.springframework.ai.ollama.api.OllamaOptions;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.stereotype.Service;
-import java.util.regex.*;
+
 import java.util.*;
-import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor

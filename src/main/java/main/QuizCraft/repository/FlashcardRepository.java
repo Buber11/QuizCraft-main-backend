@@ -1,6 +1,6 @@
 package main.QuizCraft.repository;
 
-import main.QuizCraft.model.deck.Flashcard;
+import main.QuizCraft.model.Flashcard;
 import main.QuizCraft.projection.FlashcardProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

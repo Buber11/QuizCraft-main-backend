@@ -1,7 +1,7 @@
 package main.QuizCraft.service.flashcard;
 
 import main.QuizCraft.controller.FlashcardController;
-import main.QuizCraft.model.deck.Flashcard;
+import main.QuizCraft.model.Flashcard;
 import main.QuizCraft.dto.FlashcardDTO;
 import main.QuizCraft.projection.FlashcardProjection;
 import org.springframework.data.domain.Pageable;

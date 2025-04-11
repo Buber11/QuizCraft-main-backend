@@ -1,6 +1,6 @@
 package main.QuizCraft.service.deck;
 
-import main.QuizCraft.model.deck.Deck;
+import main.QuizCraft.model.Deck;
 
 public interface DeckAccessService {
     Long getOwnerId(Long deckId);

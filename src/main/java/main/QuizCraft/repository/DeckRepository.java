@@ -1,6 +1,6 @@
 package main.QuizCraft.repository;
 
-import main.QuizCraft.model.deck.Deck;
+import main.QuizCraft.model.Deck;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;

@@ -3,7 +3,7 @@ package main.QuizCraft.service.flashcard;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import main.QuizCraft.exception.ResourceNotFoundException;
-import main.QuizCraft.model.deck.Flashcard;
+import main.QuizCraft.model.Flashcard;
 import main.QuizCraft.dto.FlashcardDTO;
 import main.QuizCraft.request.FlashcardRequest;
 import main.QuizCraft.repository.FlashcardRepository;

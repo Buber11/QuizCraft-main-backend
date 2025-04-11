@@ -1,8 +1,7 @@
-package main.QuizCraft.model.deck;
+package main.QuizCraft.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import main.QuizCraft.model.user.User;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import main.QuizCraft.exception.InvalidCredentialsException;
 import main.QuizCraft.exception.UserNotFoundException;
 import main.QuizCraft.request.AuthRequest;
-import main.QuizCraft.model.user.User;
+import main.QuizCraft.model.User;
 import main.QuizCraft.repository.UserRepository;
 import main.QuizCraft.security.JwtServiceImpl;
 import org.slf4j.Logger;
