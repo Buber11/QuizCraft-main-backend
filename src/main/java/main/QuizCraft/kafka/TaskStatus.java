@@ -1,4 +1,4 @@
-package main.QuizCraft.kafkaStatus;
+package main.QuizCraft.kafka;
 
 public enum TaskStatus {
     PENDING,

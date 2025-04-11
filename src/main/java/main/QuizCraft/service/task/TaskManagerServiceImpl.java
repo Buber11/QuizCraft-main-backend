@@ -1,12 +1,11 @@
 package main.QuizCraft.service.task;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import main.QuizCraft.dto.ProcessingTaskDto;
 import main.QuizCraft.dto.ProcessingTaskStatusDto;
 import main.QuizCraft.exception.ProcessingTaskException;
-import main.QuizCraft.kafkaStatus.MethodProcessingType;
-import main.QuizCraft.kafkaStatus.ProcessingTask;
-import main.QuizCraft.kafkaStatus.TaskStatus;
+import main.QuizCraft.kafka.*;
 import main.QuizCraft.mapStruct.ExpirationConcurrentHashMap;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @RequiredArgsConstructor
@@ -23,9 +22,20 @@ public class TaskManagerServiceImpl implements TaskManagerService{
 
     private final Map<String, ProcessingTask> tasks = new ExpirationConcurrentHashMap();
     private final ProcessingTaskAssembler processingTaskAssembler;
+    private final KafkaProducer kafkaProducer;
 
     @Override
-    public String createTask(List parametres, MethodProcessingType methodProcessingType) {
+    public ProcessingTaskStatusDto createTask(Map<String,Object> parametres,
+                             HttpServletRequest request,
+                             TOPIC topic,
+                             MethodProcessingType methodProcessingType) {
+
+        Long userId = (Long) request.getAttribute("user_id");
+        if (userId == null) {
+            throw new ProcessingTaskException("User ID not found in request attributes");
+        }
+        int orderOfTask = getOrderOfTask(userId);
+
         String taskId = UUID.randomUUID().toString();
         ProcessingTask task = new ProcessingTask(
                 taskId,
@@ -33,12 +43,28 @@ public class TaskManagerServiceImpl implements TaskManagerService{
                 TaskStatus.PENDING,
                 parametres,
                 null,
+                orderOfTask,
                 Instant.now(),
                 null,
                 null
         );
+
         tasks.put(taskId, task);
-        return taskId;
+        kafkaProducer.sendMessage(task,topic);
+        return processingTaskAssembler.toStatusDTO(task);
+    }
+
+    private int getOrderOfTask(Long userId) {
+        return 1;
+        //ToDO mechanism for ordering tasks
+//        return switch (task.getMethodProcessingType()) {
+//            case QUIZ_PROCESSING -> 1;
+//            case FLASHCARD_PROCESSING -> 2;
+//            case FILL_IN_THE_BLANK_PROCESSING -> 3;
+//            case SUMMARY_PROCESSING -> 4;
+//            case TRUE_FALSE_PROCESSING -> 5;
+//            default -> throw new IllegalArgumentException("Unknown processing type: " + task.getMethodProcessingType());
+//        };
     }
 
     @Override

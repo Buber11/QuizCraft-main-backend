@@ -29,11 +29,13 @@ public class JwtServiceImpl implements JwtService {
 
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        return extractClaim(token,
+                Claims::getSubject);
     }
 
     public Long extractUserId(String token) {
-        return extractClaim(token, claims -> claims.get("user_id", Long.class));
+        return extractClaim(token,
+                claims -> claims.get("user_id", Long.class));
     }
 
     public String extractToken(String authHeader) {
@@ -121,7 +123,7 @@ public class JwtServiceImpl implements JwtService {
         cookie.setHttpOnly(true);
         cookie.setPath("/");
         cookie.setSecure(true);
-        cookie.setMaxAge(5 * 3600); // 5 hours
+        cookie.setMaxAge(5 * 3600);
     }
 }
 
