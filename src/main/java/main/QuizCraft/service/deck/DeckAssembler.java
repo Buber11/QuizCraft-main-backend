@@ -1,7 +1,7 @@
 package main.QuizCraft.service.deck;
 
 import main.QuizCraft.controller.DeckController;
-import main.QuizCraft.model.deck.Deck;
+import main.QuizCraft.model.Deck;
 import main.QuizCraft.dto.DeckDTO;
 import org.springframework.stereotype.Component;
 

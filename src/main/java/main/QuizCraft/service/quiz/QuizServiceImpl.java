@@ -4,7 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import main.QuizCraft.dto.QuizDTO;
 import main.QuizCraft.exception.ResourceNotFoundException;
-import main.QuizCraft.model.deck.Quiz;
+import main.QuizCraft.model.Quiz;
 import main.QuizCraft.repository.QuizRepository;
 import main.QuizCraft.request.QuizRequest;
 import main.QuizCraft.service.Auth.UserVerificationService;
@@ -15,7 +15,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import main.QuizCraft.service.quiz.QuizAssembler;
 
 @Service
 @RequiredArgsConstructor

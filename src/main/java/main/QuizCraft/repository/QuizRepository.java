@@ -1,6 +1,6 @@
 package main.QuizCraft.repository;
 
-import main.QuizCraft.model.deck.Quiz;
+import main.QuizCraft.model.Quiz;
 import main.QuizCraft.projection.QuizProjection;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -8,6 +8,7 @@ import org.springframework.hateoas.RepresentationModel;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +18,7 @@ public class ProcessingTaskDto<T> extends RepresentationModel<ProcessingTaskStat
     private String taskId;
     private String methodProcessingType;
     private String status;
-    private List inputParameters;
+    private Map<String,Object> inputParameters;
     private T result;
     private Instant createdAt;
     private Instant completedAt;

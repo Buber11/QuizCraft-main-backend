@@ -3,7 +3,7 @@ package main.QuizCraft.security;
 import io.jsonwebtoken.Claims;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import main.QuizCraft.model.user.User;
+import main.QuizCraft.model.User;
 import main.QuizCraft.response.MessageResponse;
 import org.springframework.security.core.userdetails.UserDetails;
 

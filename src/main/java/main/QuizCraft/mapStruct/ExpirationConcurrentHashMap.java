@@ -1,6 +1,6 @@
 package main.QuizCraft.mapStruct;
 
-import main.QuizCraft.kafkaStatus.ProcessingTask;
+import main.QuizCraft.kafka.ProcessingTask;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;

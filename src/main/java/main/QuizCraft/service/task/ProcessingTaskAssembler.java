@@ -3,7 +3,7 @@ package main.QuizCraft.service.task;
 import main.QuizCraft.controller.TaskManagerController;
 import main.QuizCraft.dto.ProcessingTaskDto;
 import main.QuizCraft.dto.ProcessingTaskStatusDto;
-import main.QuizCraft.kafkaStatus.ProcessingTask;
+import main.QuizCraft.kafka.ProcessingTask;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;

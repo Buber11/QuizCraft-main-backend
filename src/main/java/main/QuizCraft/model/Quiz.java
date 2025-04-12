@@ -1,4 +1,4 @@
-package main.QuizCraft.model.deck;
+package main.QuizCraft.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface LlamaAiService {
 
-     List<QuizDTO> generateQuiz(String prompt);
-     List<FlashcardDTO> generateFlashcards(String prompt);
-     MessageResponse generateFillInTheBlanks(String prompt);
-     MessageResponse generateSummary(String prompt);
-     MessageResponse generateTrueFalseQuestions(String prompt);
+     List<QuizDTO> generateQuiz(List<?> contex);
+     List<FlashcardDTO> generateFlashcards(List<?> contex);
+     MessageResponse generateFillInTheBlanks(List<?> contex);
+     MessageResponse generateSummary(List<?> contex);
+     MessageResponse generateTrueFalseQuestions(List<?> contex);
 }

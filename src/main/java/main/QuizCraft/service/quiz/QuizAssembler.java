@@ -1,7 +1,7 @@
 package main.QuizCraft.service.quiz;
 
 import main.QuizCraft.dto.QuizDTO;
-import main.QuizCraft.model.deck.Quiz;
+import main.QuizCraft.model.Quiz;
 import main.QuizCraft.projection.QuizProjection;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.stereotype.Component;

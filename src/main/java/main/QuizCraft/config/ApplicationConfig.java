@@ -1,6 +1,6 @@
 package main.QuizCraft.config;
 
-import main.QuizCraft.model.user.User;
+import main.QuizCraft.model.User;
 import main.QuizCraft.repository.UserRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

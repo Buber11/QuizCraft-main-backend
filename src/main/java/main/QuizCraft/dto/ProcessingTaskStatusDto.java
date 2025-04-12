@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import main.QuizCraft.kafkaStatus.TaskStatus;
+import main.QuizCraft.kafka.TaskStatus;
 import org.springframework.hateoas.RepresentationModel;
 
 @Data
