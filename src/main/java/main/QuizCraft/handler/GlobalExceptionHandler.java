@@ -1,7 +1,7 @@
 package main.QuizCraft.handler;
 
 import main.QuizCraft.exception.*;
-import main.QuizCraft.response.FailureResponse;
+import main.QuizCraft.response.FailureResponse7808;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = BadRequestException.class )
-    public ResponseEntity<FailureResponse> handleBadRequestException(){
+    public ResponseEntity<FailureResponse7808> handleBadRequestException(){
         return ResponseEntity
                 .status(400)
-                .body(new FailureResponse(
+                .body(new FailureResponse7808(
                         "http://QuizCraft/problems/change-your-username",
                         400,
                         "Your username isn't unique",
@@ -25,10 +25,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = InvalidCredentialsException.class)
-    public ResponseEntity<FailureResponse> handleInvalidCredentialsException(){
+    public ResponseEntity<FailureResponse7808> handleInvalidCredentialsException(){
         return ResponseEntity
                 .status(401)
-                .body(new FailureResponse(
+                .body(new FailureResponse7808(
                         "http://QuizCraft/problems/authenticate",
                         401,
                         "Invalid credentials",
@@ -38,10 +38,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = UserNotFoundException.class)
-    public ResponseEntity<FailureResponse> handleUserNotFoundException(){
+    public ResponseEntity<FailureResponse7808> handleUserNotFoundException(){
         return ResponseEntity
                 .status(404)
-                .body(new FailureResponse(
+                .body(new FailureResponse7808(
                         "http://QuizCraft/problems/authenticate",
                         404,
                         "User not found",
@@ -51,10 +51,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = AiResponseException.class)
-    public ResponseEntity<FailureResponse> handleAiResponseException(AiResponseException responseException) {
+    public ResponseEntity<FailureResponse7808> handleAiResponseException(AiResponseException responseException) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new FailureResponse(
+                .body(new FailureResponse7808(
                         "http://QuizCraft/problems/lack-of-ai-connection",
                         HttpStatus.INTERNAL_SERVER_ERROR.value(),
                         responseException.getTitle(),
@@ -64,10 +64,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = IllegalArgumentException.class)
-    public ResponseEntity<FailureResponse> handleIllegalArgumentException(IllegalArgumentException exception) {
+    public ResponseEntity<FailureResponse7808> handleIllegalArgumentException(IllegalArgumentException exception) {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
-                .body(new FailureResponse(
+                .body(new FailureResponse7808(
                         "http://QuizCraft/problems/invalid-argument",
                         HttpStatus.BAD_REQUEST.value(),
                         "Invalid Argument",
@@ -77,10 +77,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<FailureResponse> handleResourceNotFound(ResourceNotFoundException e){
+    public ResponseEntity<FailureResponse7808> handleResourceNotFound(ResourceNotFoundException e){
         return ResponseEntity
                 .status(404)
-                .body( FailureResponse.builder()
+                .body( FailureResponse7808.builder()
                         .title(e.getMessage())
                         .code(404)
                         .instance(e.getInstanceName() + "?id=" + e.getId())
@@ -91,10 +91,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<FailureResponse> handleAccessDenied(AccessDeniedException e){
+    public ResponseEntity<FailureResponse7808> handleAccessDenied(AccessDeniedException e){
         return ResponseEntity
                 .status(404)
-                .body( FailureResponse.builder()
+                .body( FailureResponse7808.builder()
                         .title(e.getMessage())
                         .code(404)
                         .instance(null)
@@ -105,10 +105,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = ProcessingTaskException.class)
-    public ResponseEntity<FailureResponse> handleProcessingTaskException(ProcessingTaskException e) {
+    public ResponseEntity<FailureResponse7808> handleProcessingTaskException(ProcessingTaskException e) {
         return ResponseEntity
                 .status(404)
-                .body( FailureResponse.builder()
+                .body( FailureResponse7808.builder()
                         .title("Task processing error")
                         .code(404)
                         .instance("task")
@@ -119,10 +119,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = Exception.class)
-    public ResponseEntity<FailureResponse> handleGenericException(Exception exception) {
+    public ResponseEntity<FailureResponse7808> handleGenericException(Exception exception) {
         return ResponseEntity
                 .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body(new FailureResponse(
+                .body(new FailureResponse7808(
                         "http://QuizCraft/problems/internal-server-error",
                         HttpStatus.INTERNAL_SERVER_ERROR.value(),
                         "Internal Server Error",

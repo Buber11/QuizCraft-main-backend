@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class FailureResponse {
+public class FailureResponse7808 {
 
     private String status;
     private Integer code;
