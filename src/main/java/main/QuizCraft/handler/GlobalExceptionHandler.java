@@ -130,4 +130,17 @@ public class GlobalExceptionHandler {
                         null
                 ));
     }
+    @ExceptionHandler(value = DocProcessingException.class)
+    public ResponseEntity<FailureResponse7808> handlerDocProcessingException(DocProcessingException e){
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(new FailureResponse7808(
+                        "http://QuizCraft/problems/document",
+                        HttpStatus.BAD_REQUEST.value(),
+                        "Document upload stopped",
+                        null,
+                        null
+                ));
+
+    }
 }
