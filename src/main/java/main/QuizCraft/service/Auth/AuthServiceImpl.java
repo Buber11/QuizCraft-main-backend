@@ -33,33 +33,27 @@ public class AuthServiceImpl implements AuthService, UserVerificationService{
     public void authenticate(AuthRequest authRequest, HttpServletResponse response) {
         logger.info("Attempting authentication for username: {}", authRequest.username());
         Optional<User> userOpt = userRepository.findByUsername(authRequest.username());
-
         if (userOpt.isEmpty()) {
             logger.warn("Authentication failed: User not found for username: {}", authRequest.username());
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             throw new UserNotFoundException();
         }
-
         User user = userOpt.get();
         if (!encoder.matches(authRequest.password(), user.getPassword())) {
             logger.warn("Authentication failed: Invalid password for username: {}", authRequest.username());
-            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED); // 401
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             throw new InvalidCredentialsException();
         }
-
         logger.info("Authentication successful for username: {}", authRequest.username());
-
         Cookie cookie = jwtService.createJwtCookie(Map.of("user_id", user.getId()),
                 user,
                 "jwt_token");
         response.addCookie(cookie);
-
     }
 
     @Override
     public void register(AuthRequest authRequst) {
         logger.info("Attempting to register a new user: {}", authRequst.username());
-
         User newUser = new User(
                 authRequst.username(),
                 encoder.encode(authRequst.password()),
@@ -71,7 +65,6 @@ public class AuthServiceImpl implements AuthService, UserVerificationService{
             logger.info("User successfully registered: {}", authRequst.username());
         } catch (DataAccessException ex) {
             logger.error("Registration failed: User with username {} already exists.", authRequst.username(), ex);
-            // to do
             throw new UserNotFoundException();
         }
     }
@@ -81,10 +74,9 @@ public class AuthServiceImpl implements AuthService, UserVerificationService{
     public void renewCookie(HttpServletRequest request, HttpServletResponse response) {
         long userId = (long) request.getAttribute("user_id");
         Optional<User> userOpt = userRepository.findById(userId);
-
         if (userOpt.isEmpty()) {
             logger.warn("Authentication failed: User not found for id: {}", userId );
-            response.setStatus(HttpServletResponse.SC_NOT_FOUND); // 404
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             throw new UserNotFoundException();
         }
         User user = userOpt.get();
@@ -92,7 +84,6 @@ public class AuthServiceImpl implements AuthService, UserVerificationService{
                 user,
                 "jwt_token");
         response.addCookie(cookie);
-
     }
 
     @Override

@@ -2,6 +2,7 @@ package main.QuizCraft.service.task;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import main.QuizCraft.dto.ProcessingTaskDto;
 import main.QuizCraft.dto.ProcessingTaskStatusDto;
 import main.QuizCraft.exception.ProcessingTaskException;
@@ -18,6 +19,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class TaskManagerServiceImpl implements TaskManagerService{
 
     private final Map<String, ProcessingTask> tasks = new ExpirationConcurrentHashMap();
@@ -25,18 +27,26 @@ public class TaskManagerServiceImpl implements TaskManagerService{
     private final KafkaProducer kafkaProducer;
 
     @Override
-    public ProcessingTaskStatusDto createTask(Map<String,Object> parametres,
-                             HttpServletRequest request,
-                             TOPIC topic,
-                             MethodProcessingType methodProcessingType) {
+    public ProcessingTaskStatusDto createTask(Map<String, Object> parametres,
+                                              HttpServletRequest request,
+                                              TOPIC topic,
+                                              MethodProcessingType methodProcessingType) {
+        log.info("Starting task creation with parameters: {}, topic: {}, methodProcessingType: {}", parametres, topic, methodProcessingType);
 
         Long userId = (Long) request.getAttribute("user_id");
         if (userId == null) {
+            log.error("User ID not found in request attributes");
             throw new ProcessingTaskException("User ID not found in request attributes");
         }
-        int orderOfTask = getOrderOfTask(userId);
+        log.info("User ID retrieved: {}", userId);
 
+        int orderOfTask = getOrderOfTask(userId);
+        log.info("Order of task determined: {}", orderOfTask);
+
+        parametres.put("user_id", userId);
         String taskId = UUID.randomUUID().toString();
+        log.info("Generated task ID: {}", taskId);
+
         ProcessingTask task = new ProcessingTask(
                 taskId,
                 methodProcessingType,
@@ -48,10 +58,18 @@ public class TaskManagerServiceImpl implements TaskManagerService{
                 null,
                 null
         );
+        log.debug("Created ProcessingTask object: {}", task);
 
         tasks.put(taskId, task);
-        kafkaProducer.sendMessage(task,topic);
-        return processingTaskAssembler.toStatusDTO(task);
+        log.info("Task added to the task map: {}", taskId);
+
+        kafkaProducer.sendMessage(task, topic);
+        log.info("Task sent to Kafka topic: {}", topic);
+
+        ProcessingTaskStatusDto statusDto = processingTaskAssembler.toStatusDTO(task);
+        log.info("Task status DTO created: {}", statusDto);
+
+        return statusDto;
     }
 
     private int getOrderOfTask(Long userId) {

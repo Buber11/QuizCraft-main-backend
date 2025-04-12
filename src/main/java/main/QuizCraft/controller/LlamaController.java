@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
@@ -25,10 +25,13 @@ public class LlamaController {
             @PathVariable("type") String type,
             HttpServletRequest request,
             @RequestBody String promptMessage) {
-
+        System.out.println("wełszo");
         MethodProcessingType processingType = mapToProcessingType(type);
         ProcessingTaskStatusDto taskStatusDto = taskManagerService.createTask(
-                Map.of("prompt",promptMessage),request, TOPIC.AI_GENERATION_REQUESTS, processingType);
+                new HashMap<>(Map.of("prompt",promptMessage)),
+                request,
+                TOPIC.AI_REQUEST_FOR_VECTOR_DATA,
+                processingType);
 
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(taskStatusDto);
     }

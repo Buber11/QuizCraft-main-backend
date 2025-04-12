@@ -17,9 +17,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.Executors;
 import java.util.concurrent.PriorityBlockingQueue;
 
@@ -42,7 +40,9 @@ public class KafkaConsumer {
             while (!Thread.currentThread().isInterrupted()) {
                 try {
                     ProcessingTask<?> task = taskQueue.take();
-                    processTask(task);
+                    if(task.getStatus() != TaskStatus.FAILED){
+                        processTask(task);
+                    }
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
                     log.error("Queue processing interrupted", e);
@@ -53,7 +53,9 @@ public class KafkaConsumer {
 
 
     @Async
-    @KafkaListener(topics = "ai-generation-requests", groupId = "ai-consumer-group")
+    @KafkaListener(topics = "ai-response-for-vector-data",
+            groupId = "ai-consumer-group",
+            clientIdPrefix = "java-client-response")
     public void listen(String message, Acknowledgment ack) {
         log.info("Received Kafka message: {}", message);
         try {
@@ -69,33 +71,33 @@ public class KafkaConsumer {
     }
 
     public void processTask(ProcessingTask processingTask){
-        processingTask.setStatus(TaskStatus.PROCESSING);
-        taskManagerService.updateTask(processingTask);
+        Map map = (Map) processingTask.getResult();
+        List contex = (List) map.get("sentences");
         try {
             switch (processingTask.getMethodProcessingType()) {
                 case MethodProcessingType.QUIZ_PROCESSING:
                     List<QuizDTO> quizDTOList = llamaAiService
-                            .generateQuiz((String) processingTask.getInputParameters().get("prompt"));
+                            .generateQuiz(contex);
                     processingTask.setResult(quizDTOList);
                     break;
                 case MethodProcessingType.FLASHCARD_PROCESSING:
                     List<FlashcardDTO> flashcardDTOS = llamaAiService
-                            .generateFlashcards((String) processingTask.getInputParameters().get("prompt"));
+                            .generateFlashcards(contex);
                     processingTask.setResult(flashcardDTOS);
                     break;
                 case MethodProcessingType.FILL_IN_THE_BLANK_PROCESSING:
                     MessageResponse generateFillInTheBlanks = llamaAiService
-                            .generateFillInTheBlanks((String) processingTask.getInputParameters().get("prompt"));
+                            .generateFillInTheBlanks(contex);
                     processingTask.setResult(generateFillInTheBlanks);
                     break;
                 case MethodProcessingType.SUMMARY_PROCESSING:
                     MessageResponse generateSummary = llamaAiService
-                            .generateSummary((String) processingTask.getInputParameters().get("prompt"));
+                            .generateSummary(contex);
                     processingTask.setResult(generateSummary);
                     break;
                 case MethodProcessingType.TRUE_FALSE_PROCESSING:
                     MessageResponse generateTrueFalseQuestions = llamaAiService
-                            .generateTrueFalseQuestions((String) processingTask.getInputParameters().get("prompt"));
+                            .generateTrueFalseQuestions(contex);
                     processingTask.setResult(generateTrueFalseQuestions);
                     break;
                 default:
@@ -112,6 +114,24 @@ public class KafkaConsumer {
             processingTask.setStatus(TaskStatus.FAILED);
             taskManagerService.updateTask(processingTask);
             log.error("Error processing task {}: {}", processingTask.getTaskId(), e.getMessage(), e);
+        }
+    }
+
+    @Async
+    @KafkaListener(topics = "status-processing",
+            groupId = "ai-status-group",
+            clientIdPrefix = "java-client-status")
+    public void listenStatus(String message, Acknowledgment ack) {
+        log.info("Received Kafka message: {}", message);
+        try {
+            ProcessingTask<?> processingTask = objectMapper.readValue(message, ProcessingTask.class);
+            taskManagerService.updateTask(processingTask);
+            ack.acknowledge();
+        } catch (JsonProcessingException e) {
+            log.error("Error parsing Kafka message: {}", e.getMessage(), e);
+            ack.acknowledge();
+        } catch (Exception e) {
+            log.error("Unexpected error while processing Kafka message: {}", e.getMessage(), e);
         }
     }
 }
