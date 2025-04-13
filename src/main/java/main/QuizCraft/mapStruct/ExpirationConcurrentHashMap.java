@@ -3,6 +3,8 @@ package main.QuizCraft.mapStruct;
 import main.QuizCraft.kafka.ProcessingTask;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -13,7 +15,8 @@ public class ExpirationConcurrentHashMap extends ConcurrentHashMap<String, Proce
 
         super.forEach((k, task) -> {
             if (task.getCompletedAt() != null &&
-                    task.getCompletedAt().plus(5, ChronoUnit.MINUTES).isBefore(Instant.now())) {
+                    task.getCompletedAt().plus(5, ChronoUnit.MINUTES)
+                            .isBefore(ZonedDateTime.now())) {
                 super.remove(k);
             }
         });

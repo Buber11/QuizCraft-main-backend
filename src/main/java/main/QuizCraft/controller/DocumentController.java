@@ -19,7 +19,6 @@ public class DocumentController {
     @PostMapping("/text")
     public ResponseEntity<ProcessingTaskStatusDto> saveText(HttpServletRequest request,
                                                             @RequestBody() String text) {
-
         ProcessingTaskStatusDto taskStatusDto = docUploadService.processText(request, text);
         return ResponseEntity.accepted().body(taskStatusDto);
     }

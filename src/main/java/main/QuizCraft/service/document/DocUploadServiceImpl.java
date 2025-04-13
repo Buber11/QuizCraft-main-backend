@@ -27,7 +27,7 @@ public class DocUploadServiceImpl implements DocUploadService{
         return taskManagerService.createTask(
                 new HashMap<>(Map.of("text", text)),
                 request,
-                TOPIC.TEXT_PROCESSING,
+                TOPIC.TEXT_PROCESSING_REQUEST,
                 MethodProcessingType.DOCUMENT_PROCESSING
         );
     }

@@ -5,7 +5,7 @@ public enum TOPIC {
     AI_REQUEST_FOR_VECTOR_DATA("ai-request-for-vector-data"),
     AI_RESPONSE_FOR_VECTOR_DATA("ai-response-for-vector-data"),
     STATUS_PROCESSING("status-processing"),
-    TEXT_PROCESSING("text-processing");
+    TEXT_PROCESSING_REQUEST("text-processing-request");
 
     private final String topicName;
 
