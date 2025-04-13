@@ -6,10 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.cglib.core.Local;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -26,7 +29,7 @@ public class ProcessingTask<T> {
     @Min(1)
     @Max(5)
     private int order;
-    private Instant createdAt;
-    private Instant completedAt;
-    private Instant expirationAt;
+    private ZonedDateTime createdAt;
+    private ZonedDateTime completedAt;
+    private ZonedDateTime expirationAt;
 }

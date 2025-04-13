@@ -12,6 +12,8 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -54,7 +56,7 @@ public class TaskManagerServiceImpl implements TaskManagerService{
                 parametres,
                 null,
                 orderOfTask,
-                Instant.now(),
+                ZonedDateTime.now(),
                 null,
                 null
         );

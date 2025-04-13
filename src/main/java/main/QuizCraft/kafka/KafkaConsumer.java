@@ -16,6 +16,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.concurrent.Executors;
@@ -105,7 +108,7 @@ public class KafkaConsumer {
             }
 
             processingTask.setStatus(TaskStatus.COMPLETED);
-            processingTask.setCompletedAt(Instant.now());
+            processingTask.setCompletedAt(ZonedDateTime.now());
             processingTask.setExpirationAt(processingTask.getCompletedAt().plus(5, ChronoUnit.MINUTES));
 
             taskManagerService.updateTask(processingTask);
@@ -125,6 +128,10 @@ public class KafkaConsumer {
         log.info("Received Kafka message: {}", message);
         try {
             ProcessingTask<?> processingTask = objectMapper.readValue(message, ProcessingTask.class);
+            if (processingTask.getStatus() == TaskStatus.COMPLETED){
+                processingTask.setCompletedAt(ZonedDateTime.now(ZoneId.of("UTC")));
+                processingTask.setExpirationAt(processingTask.getCompletedAt().plusMinutes(5));
+            }
             taskManagerService.updateTask(processingTask);
             ack.acknowledge();
         } catch (JsonProcessingException e) {
