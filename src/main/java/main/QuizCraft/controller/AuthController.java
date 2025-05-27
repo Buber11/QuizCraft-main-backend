@@ -25,14 +25,15 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody AuthRequest authRequst,
+                                                        HttpServletRequest httpServletRequest,
                                                         HttpServletResponse httpServletResponse){
-        authService.authenticate(authRequst, httpServletResponse);
+        authService.authenticate(authRequst, httpServletRequest, httpServletResponse);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PostMapping("/new-cookie")
+    @PostMapping("/new-access-token")
     public ResponseEntity renewCookie(HttpServletRequest request,
-                                                               HttpServletResponse httpResponse){
+                                      HttpServletResponse httpResponse){
         authService.renewCookie(request, httpResponse);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
@@ -40,6 +41,12 @@ public class AuthController {
     @GetMapping("/token-validation")
     public ResponseEntity validateToken(HttpServletRequest request){
         jwtService.validateToken(request);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity logout(HttpServletRequest request) {
+        authService.logout(request);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 

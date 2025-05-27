@@ -42,10 +42,10 @@ public class JwtServiceImpl implements JwtService {
         return authHeader.substring(7);
     }
 
-    public String extractToken(HttpServletRequest request){
+    public String extractToken(HttpServletRequest request, String tokenName){
         Cookie[] cookies = request.getCookies();
         return Arrays.stream(cookies)
-                .filter(e -> e.getName().equals("jwt_token"))
+                .filter(e -> e.getName().equals(tokenName))
                 .map(e -> e.getValue())
                 .findAny()
                 .orElse(null);
@@ -114,7 +114,7 @@ public class JwtServiceImpl implements JwtService {
 
     @Override
     public MessageResponse validateToken(HttpServletRequest request) {
-        String token = extractToken(request);
+        String token = extractToken(request,"jwt_token");
         Boolean isValid = ! isTokenExpired(token);
         return new MessageResponse(isValid.toString());
     }

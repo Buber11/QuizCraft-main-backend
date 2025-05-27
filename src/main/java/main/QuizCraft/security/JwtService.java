@@ -18,7 +18,7 @@ public interface JwtService {
 
     String extractToken(String authHeader);
 
-    String extractToken(HttpServletRequest request);
+    String extractToken(HttpServletRequest request, String tokenName);
 
     <T> T extractClaim(String token, Function<Claims, T> claimsResolver);
 

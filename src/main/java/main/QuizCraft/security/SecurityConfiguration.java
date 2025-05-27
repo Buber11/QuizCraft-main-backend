@@ -25,6 +25,11 @@ public class SecurityConfiguration {
             "/api/v1/auth/register",
     };
 
+    public static final String[] REFRESH_TOKEN_ENDPOINT = {
+            "/api/v1/auth/new-access-token",
+            "api/v1/auth/logout"
+    };
+
     private final AuthenticationProvider authenticationProvider;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 

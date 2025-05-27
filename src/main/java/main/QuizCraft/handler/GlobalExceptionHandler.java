@@ -103,6 +103,19 @@ public class GlobalExceptionHandler {
                         .build()
                 );
     }
+    @ExceptionHandler(TokenAccessDeniedException.class)
+    public ResponseEntity<FailureResponse7808> handleTokenAccessDeniedException(TokenAccessDeniedException e) {
+        return ResponseEntity
+                .status(404)
+                .body( FailureResponse7808.builder()
+                        .title(e.getMessage())
+                        .code(404)
+                        .instance(null)
+                        .status("http://QuizCraft/problems/token-access-denied")
+                        .detail("The provided token is invalid or expired. You need to log in again.")
+                        .build()
+                );
+    }
 
     @ExceptionHandler(value = ProcessingTaskException.class)
     public ResponseEntity<FailureResponse7808> handleProcessingTaskException(ProcessingTaskException e) {
