@@ -7,16 +7,12 @@ import main.QuizCraft.dto.ProcessingTaskDto;
 import main.QuizCraft.dto.ProcessingTaskStatusDto;
 import main.QuizCraft.exception.ProcessingTaskException;
 import main.QuizCraft.kafka.*;
-import main.QuizCraft.mapStruct.ExpirationConcurrentHashMap;
+import main.QuizCraft.map.AdaptiveExpiringTaskMap;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
-import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -24,7 +20,7 @@ import java.util.UUID;
 @Slf4j
 public class TaskManagerServiceImpl implements TaskManagerService{
 
-    private final Map<String, ProcessingTask> tasks = new ExpirationConcurrentHashMap();
+    private final AdaptiveExpiringTaskMap tasks = new AdaptiveExpiringTaskMap();
     private final ProcessingTaskAssembler processingTaskAssembler;
     private final KafkaProducer kafkaProducer;
 
