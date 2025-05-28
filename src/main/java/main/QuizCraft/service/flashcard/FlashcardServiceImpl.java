@@ -26,14 +26,15 @@ public class FlashcardServiceImpl implements FlashcardService{
     private final DeckAccessService deckAccessService;
     private final FlashcardAssembler flashcardAssembler;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(FlashcardServiceImpl.class);
-
+    private static final Logger LOGGER = LoggerFactory.getLogger(FlashcardServiceImpl.class);
+    
     @Override
     @Transactional(readOnly = true)
     public Page<FlashcardDTO> loadFlashcards(long deckID, Pageable pageable, HttpServletRequest request) {
         LOGGER.info("Loading flashcards for deck ID: {}", deckID);
-        Long ownerId = deckAccessService.getOwnerId(deckID);
-        userVerificationService.verifyOwner(request, ownerId);
+
+        verifyUserAccess(request, deckID);
+
         Page<FlashcardDTO> flashcards = flashcardRepository.loadDTO(deckID, pageable)
                 .map(projection -> flashcardAssembler.toModel(projection, deckID));
         LOGGER.info("Loaded {} flashcards for deck ID: {}", flashcards.getTotalElements(), deckID);
@@ -45,19 +46,33 @@ public class FlashcardServiceImpl implements FlashcardService{
     public void deleteFlashcard(long id, HttpServletRequest request) {
         LOGGER.info("Deleting flashcard with ID: {}", id);
         Long deckId = getDeckId(id);
-        Long userId = deckAccessService.getOwnerId(deckId);
-        userVerificationService.verifyOwner(request, userId);
+
+        verifyUserAccess(request, deckId);
+
         flashcardRepository.deleteById(id);
         LOGGER.info("Flashcard with ID: {} successfully deleted", id);
     }
 
+    /**
+     * Updates the flashcard entity.
+     *
+     * Note:
+     * Since the flashcard is loaded and managed within the current transaction,
+     * there is no need to explicitly call `save()` after modifying its fields.
+     *
+     * Hibernate's dirty checking mechanism will automatically detect changes
+     * and flush the updates to the database upon transaction commit.
+     *
+     * Explicitly calling `save()` here could cause unnecessary flushes,
+     * potentially reducing performance.
+     */
     @Override
     @Transactional
     public FlashcardDTO updateFlashcard(long id, FlashcardRequest flashcardRequest, HttpServletRequest request) {
         LOGGER.info("Updating flashcard with ID: {}", id);
         Long deckId = getDeckId(id);
-        Long userId = deckAccessService.getOwnerId(deckId);
-        userVerificationService.verifyOwner(request, userId);
+
+        verifyUserAccess(request, deckId);
 
         Flashcard flashcard = flashcardRepository.findById(id)
                 .orElseThrow(() -> {
@@ -67,9 +82,7 @@ public class FlashcardServiceImpl implements FlashcardService{
 
         flashcard.setFront(flashcardRequest.getFront());
         flashcard.setBack(flashcardRequest.getBack());
-        flashcardRepository.save(flashcard);
         LOGGER.info("Flashcard with ID: {} successfully updated", id);
-
         return new FlashcardDTO(flashcard.getId(), flashcard.getFront(), flashcard.getBack());
     }
 
@@ -77,15 +90,20 @@ public class FlashcardServiceImpl implements FlashcardService{
     @Transactional
     public void saveFlashcard(FlashcardRequest flashcardRequest, HttpServletRequest request) {
         LOGGER.info("Saving new flashcard for deck ID: {}", flashcardRequest.getDeckId());
-        Long userId = deckAccessService.getOwnerId(flashcardRequest.getDeckId());
-        userVerificationService.verifyOwner(request, userId);
+        Long deckId = flashcardRequest.getDeckId();
 
-        Flashcard flashcard = new Flashcard();
-        flashcard.setFront(flashcardRequest.getFront());
-        flashcard.setBack(flashcardRequest.getBack());
-        flashcard.setDeck( deckAccessService.getDeckReference(flashcardRequest.getDeckId()) );
+        verifyUserAccess(request, deckId);
+
+        var deckReference = deckAccessService.getDeckReference(deckId);
+
+        Flashcard flashcard = Flashcard.builder()
+                .front(flashcardRequest.getFront())
+                .back(flashcardRequest.getBack())
+                .deck(deckReference)
+                .build();
+
         flashcardRepository.save(flashcard);
-        LOGGER.info("New flashcard successfully saved for deck ID: {}", flashcardRequest.getDeckId());
+        LOGGER.debug("New flashcard successfully saved for deck ID: {}", flashcardRequest.getDeckId());
     }
 
     private Long getDeckId(Long id) {
@@ -96,4 +114,10 @@ public class FlashcardServiceImpl implements FlashcardService{
                     return new ResourceNotFoundException("Flashcard not found",id,"Flashcard");
                 });
     }
+
+    private void verifyUserAccess(HttpServletRequest request, Long deckId) {
+        Long userId = deckAccessService.getOwnerId(deckId);
+        userVerificationService.verifyOwner(request, userId);
+    }
+
 }

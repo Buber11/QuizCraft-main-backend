@@ -13,6 +13,7 @@ import main.QuizCraft.repository.UserRepository;
 import main.QuizCraft.service.Auth.UserVerificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -127,6 +128,7 @@ public class DeckServiceImpl implements DeckService, DeckAccessService {
     }
 
     @Override
+    @Cacheable("deckOwnerCache")
     public Long getOwnerId(Long deckId) {
         return deckRepository.findOwnerId(deckId)
                 .orElseThrow(() -> {
